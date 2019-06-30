@@ -89,14 +89,18 @@ As second parameter you can pass an object with the following properties
 
 * `stopAtFirstError: boolean`: If you have many validators on a field, it will stop and do not check the remaining validators at the first failure. Default is `true`
 
-### `bindClass({ form: StoreObservable, valid: string = 'valid', invalid: string = 'invalid' })`
+### `bindClass({ form: StoreObservable, , name: string, valid: string = 'valid', invalid: string = 'invalid' })`
 
 > ```html
-> <input type="text" use:bindClass={{ form: loginForm }} />
+> <input type="text" name="username" use:bindClass={{ form: loginForm }} />
+> <input type="text" use:bindClass={{ form: loginForm, name: "username" }} />
 > ```
 
 Automatically adds `valid` or `invalid` (default value) classes to the input **IF**
 the form is dirty **AND** every rules are matched.
+
+If `bindClass` is use on a DOM node that has an attribute `name`, it will check for this field.
+Otherwise you can set the field by setting the `name` parameter.
 
 You can override the classes by passing the parameters `valid` and `invalid`.
 
