@@ -123,8 +123,6 @@ function walkThroughFields(fn, observable, config) {
 
     returnedObject.oldValues[key] = value;
     
-    console.log("Old: %s, value: %s", context.oldValues[key], value);
-    
     if (!context.dirty && context.oldValues[key] !== undefined && value !== context.oldValues[key]) {
       returnedObject.dirty = true;
     }
