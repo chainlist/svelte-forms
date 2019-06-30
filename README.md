@@ -1,4 +1,4 @@
-# Svelte Store Storage plugin [![Build Status](https://travis-ci.org/chainlist/svelte-forms.svg?branch=master)](https://travis-ci.org/chainlist/svelte-forms)
+# Svelte Forms Validation [![Build Status](https://travis-ci.org/chainlist/svelte-forms.svg?branch=master)](https://travis-ci.org/chainlist/svelte-forms)
 
 ## Install
 
