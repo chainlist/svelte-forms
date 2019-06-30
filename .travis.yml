@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "10"
+env:
+  global:
+    - BUILD_TIMEOUT=20000
+
+install:
+  - npm ci || npm install

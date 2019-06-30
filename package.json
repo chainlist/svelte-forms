@@ -1,0 +1,30 @@
+{
+  "name": "svelte-forms",
+  "version": "1.0.0",
+  "description": "Svelte forms validations are easy",
+  "main": "src/index.js",
+  "author": "Kevin Guillouard <kevin.guillouard@gmail.com>",
+  "keywords": [
+    "svelte",
+    "forms",
+    "form",
+    "validations",
+    "validation",
+    "validators",
+    "validator"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "jest-transform-svelte": "^2.0.2"
+  },
+  "peerDependencies": {
+    "svelte": "^3.0.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
