@@ -1,6 +1,6 @@
-import { afterUpdate } from 'svelte';
-import { writable, get } from 'svelte/store';
-import * as rules from './rules';
+import { afterUpdate } from "svelte";
+import { writable, get } from "svelte/store";
+import * as rules from "./rules";
 
 function getValue(field) {
   return field.value;
@@ -15,13 +15,13 @@ function validate(value, { field, validator, observable }) {
   let valid = true;
   let pending = false;
   let rule;
-  
-  if (typeof validator === 'function') {
+
+  if (typeof validator === "function") {
     const resp = validator.call(null, value);
 
     if (isPromise(resp)) {
       pending = true;
-      resp.then(({ name, valid }) => {
+      resp.then(({ rule, valid }) => {
         observable.update(n => {
           n[field] = n[field] || { errors: [] };
 
@@ -49,39 +49,46 @@ function validate(value, { field, validator, observable }) {
 }
 
 function field(name, config, observable, { stopAtFirstError }) {
-    const { value, validators = [] } = config;
-    let valid = true;
-    let pending = false;
-    let errors = [];
+  const { value, validators = [] } = config;
+  let valid = true;
+  let pending = false;
+  let errors = [];
 
-    for (let i = 0; i < validators.length; i++) {
-      const [isValid, rule, isPending] = validate(value, { field: name, validator: validators[i], observable });
+  for (let i = 0; i < validators.length; i++) {
+    const [isValid, rule, isPending] = validate(value, {
+      field: name,
+      validator: validators[i],
+      observable
+    });
 
-      if (!pending && isPending) {
-        pending = true;
-      }
-      
-      if (!isValid) {
-        valid = false;
-        errors = [...errors, rule];
-
-        if (stopAtFirstError) break;
-      }
+    if (!pending && isPending) {
+      pending = true;
     }
 
-    return { valid, errors, pending };
+    if (!isValid) {
+      valid = false;
+      errors = [...errors, rule];
+
+      if (stopAtFirstError) break;
+    }
+  }
+
+  return { valid, errors, pending };
 }
 
-export function bindClass(node, { form, name, valid = 'valid', invalid = 'invalid' }) {
-  const key = name || node.getAttribute('name');
+export function bindClass(
+  node,
+  { form, name, valid = "valid", invalid = "invalid" }
+) {
+  const key = name || node.getAttribute("name");
 
-  const unsubscribe = form.subscribe((context) => {
+  const unsubscribe = form.subscribe(context => {
     if (context.dirty && context[key] && context[key].valid) {
       node.classList.add(valid);
     } else {
       node.classList.remove(valid);
     }
-  
+
     if (context.dirty && context[key] && !context[key].valid) {
       node.classList.add(invalid);
     } else {
@@ -91,12 +98,15 @@ export function bindClass(node, { form, name, valid = 'valid', invalid = 'invali
 
   return {
     destroy: unsubscribe
-  }
+  };
 }
 
-export function form(fn, config = { initCheck: false, stopAtFirstError: true }) {
-  const storeValue = writable({ oldValues: {}, dirty: false  });
-  
+export function form(
+  fn,
+  config = { initCheck: false, stopAtFirstError: true }
+) {
+  const storeValue = writable({ oldValues: {}, dirty: false });
+
   afterUpdate(() => walkThroughFields(fn, storeValue, config));
 
   walkThroughFields(fn, storeValue, config);
@@ -116,23 +126,25 @@ function walkThroughFields(fn, observable, config) {
 
     if (value !== context.oldValues[key]) {
       returnedObject[key] = field(key, fields[key], observable, config);
-    }
-    else {
+    } else {
       returnedObject[key] = context[key];
     }
 
     returnedObject.oldValues[key] = value;
-    
-    if (!context.dirty && context.oldValues[key] !== undefined && value !== context.oldValues[key]) {
+
+    if (
+      !context.dirty &&
+      context.oldValues[key] !== undefined &&
+      value !== context.oldValues[key]
+    ) {
       returnedObject.dirty = true;
     }
   });
 
   returnedObject.valid = !Object.keys(returnedObject).find(f => {
-    if (['oldValues', 'dirty'].includes(f)) return false;
+    if (["oldValues", "dirty"].includes(f)) return false;
     return !returnedObject[f].valid;
   });
 
   observable.set(returnedObject);
 }
-
