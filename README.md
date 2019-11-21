@@ -26,14 +26,14 @@ or
 <form>
   <input type="text" bind:value={value} use:bindClass={{ form: myForm }}/>
 
-  {#if $loginForm.name.errors.includes('required') }
+  {#if $myForm.name.errors.includes('required') }
     <p>The name is required</p>
   {/if}
   
-  {#if $loginForm.name.errors.includes('min') }
+  {#if $myForm.name.errors.includes('min') }
     <p>The name should be at least 6 characters</p>
   {/if}
-  <button bind:disabled={!$loginForm.valid}>Login</button>
+  <button bind:disabled={!$myForm.valid}>Login</button>
 </form>
 ```
 
