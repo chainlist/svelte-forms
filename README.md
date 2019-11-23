@@ -89,6 +89,22 @@ As second parameter you can pass an object with the following properties
 
 * `stopAtFirstError: boolean`: If you have many validators on a field, it will stop and do not check the remaining validators at the first failure. Default is `true`
 
+| property   | description                                                                  |
+|------------|------------------------------------------------------------------------------|
+| `stopAtFirstError`      | Tells if the validators should stop at the first encountered error. Default: `true`                                              |
+| `initCheck` | Tells the form to validate or not the fields at initialization. Default: `true` |
+| `validateOnChange`    | Tells the form to validate or not fields on every changes on the fields. If you want to manually run the validation. Default: `true` |
+
+The form comes with an handy function `validate` the performs a validation on call.
+
+```javascript
+const myForm = form(() => ({ name: { value: '', validators: ['required']} }));
+
+function manualValidation() {
+  myForm.validate();
+}
+```
+
 ### `bindClass({ form: StoreObservable, , name: string, valid: string = 'valid', invalid: string = 'invalid' })`
 
 > ```html
@@ -113,7 +129,7 @@ You can override the classes by passing the parameters `valid` and `invalid`.
 The keys of the object represent the name of the fields and their [validator configurations](#validatorConfigurationObject)
 
 ```javascript
-{ name: { value: name, validators: ['requred'] } }
+{ name: { value: name, validators: ['requred'], enabled: true } }
 ```
 
 ## <a name="validatorConfigurationObject"></a>Validator configuration object
@@ -122,6 +138,7 @@ The keys of the object represent the name of the fields and their [validator con
 |------------|------------------------------------------------------------------------------|
 | `value`      | Reference the value to be check                                              |
 | `validators` | An array representing the validations that need to be performed on the field. See [@validators](#validators) |
+| `enabled`    | Boolean defining if the field should be check on the next validation process. Default `true` |
 
 ## <a name="formValidationObject"></a>Form validation object
 
