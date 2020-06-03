@@ -116,8 +116,6 @@ export function form(fn, config = {}) {
     ])
   );
 
-  console.debug({ initialFieldsData });
-
   const storeValue = writable({
     fields: {},
     oldFields: {},
