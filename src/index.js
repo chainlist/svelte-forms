@@ -134,11 +134,9 @@ export function form(fn, config = {}) {
   );
 
   if (config.validateOnChange) {
-    setTimeout(() => {
-      afterUpdate(() =>
-        walkThroughFields(fn, storeValue, initialFieldsData, config)
-      );
-    }, 0);
+    afterUpdate(() =>
+      walkThroughFields(fn, storeValue, initialFieldsData, config)
+    );
   }
 
   if (config.initCheck) {
