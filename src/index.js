@@ -11,29 +11,30 @@ function isPromise(obj) {
   return !!obj.then;
 }
 
-function validate(value, { field, validator, observable, enabled }) {
+function validate(fieldName, value, validator, observable, enabled = true) {
   let valid = true;
   let pending = false;
   let rule;
 
   if (enabled === false) {
-    return [valid, pending, rule];
-  }
-  else if (typeof validator === 'function') {
+    return [valid, rule, pending];
+  } else if (typeof validator === 'function') {
     const resp = validator.call(null, value);
 
     if (isPromise(resp)) {
       pending = true;
       resp.then(({ name, valid }) => {
-        observable.update(n => {
-          n[field] = n[field] || { errors: [] };
+        observable.update((n) => {
+          n.fields[fieldName] = n.fields[fieldName] || { errors: [] };
 
-          n[field].pending = false;
-          n[field].valid = valid;
+          n.fields[fieldName].pending = false;
+          n.fields[fieldName].valid = valid;
 
           if (!valid) {
-            n[field].errors.push(rule);
+            n.fields[fieldName].errors.push(name);
           }
+
+          n.valid = !Object.keys(n.fields).find((f) => !n.fields[f].valid);
 
           return n;
         });
@@ -51,113 +52,165 @@ function validate(value, { field, validator, observable, enabled }) {
   return [valid, rule, pending];
 }
 
-function field(name, config, observable, { stopAtFirstError }) {
-    const { value, validators = [], enabled = true } = config;
-    let valid = true;
-    let pending = false;
-    let errors = [];
+function validateField(data, observable, { stopAtFirstFieldError }) {
+  const { name, value, validators = [], enabled = true } = data;
 
-    if (enabled) {
-      for (let i = 0; i < validators.length; i++) {
-        const [isValid, rule, isPending] = validate(value, { field: name, validator: validators[i], observable });
-  
-        if (!pending && isPending) {
-          pending = true;
-        }
-        
-        if (!isValid) {
-          valid = false;
-          errors = [...errors, rule];
-  
-          if (stopAtFirstError) break;
-        }
+  let valid = true;
+  let pending = false;
+  let errors = [];
+
+  if (enabled) {
+    validators.some((validator) => {
+      const [isValid, rule, isPending] = validate(
+        name,
+        value,
+        validator,
+        observable
+      );
+
+      if (!pending && isPending) {
+        valid = false;
+        pending = true;
       }
-    }
 
-    return { valid, errors, pending };
+      if (!isValid) {
+        valid = false;
+        errors = [...errors, rule];
+
+        return stopAtFirstFieldError;
+      }
+    });
+  }
+
+  return { data, valid, errors, pending };
 }
 
-export function bindClass(node, { form, name, valid = 'valid', invalid = 'invalid' }) {
+export function bindClass(
+  node,
+  { form, name, valid = 'valid', invalid = 'invalid' }
+) {
   const key = name || node.getAttribute('name');
 
   const unsubscribe = form.subscribe((context) => {
-    if (context.dirty && context[key] && context[key].valid) {
+    if (!context.fields.hasOwnProperty(key)) {
+      return;
+    }
+    const field = context.fields[key];
+
+    if (field.valid) {
       node.classList.add(valid);
+      node.classList.remove(invalid);
     } else {
       node.classList.remove(valid);
-    }
-  
-    if (context.dirty && context[key] && !context[key].valid) {
       node.classList.add(invalid);
-    } else {
-      node.classList.remove(invalid);
     }
   });
 
   return {
     destroy: unsubscribe
-  }
+  };
 }
 
 export function form(fn, config = {}) {
-  const storeValue = writable({ oldValues: {}, dirty: false  });
+  const fields = fn.call();
+  const initialFieldsData = Object.fromEntries(
+    Object.keys(fields).map((key) => [
+      key,
+      { name: fields[key].name || key, value: fields[key].value }
+    ])
+  );
+
+  const storeValue = writable({
+    fields: {},
+    oldFields: {},
+    dirty: false,
+    valid: true
+  });
   const { subscribe, set, update } = storeValue;
-  config = Object.assign({ initCheck: true, validateOnChange: true, stopAtFirstError: true}, config);
-  
+  config = Object.assign(
+    {
+      initCheck: true,
+      validateOnChange: true,
+      stopAtFirstError: false,
+      stopAtFirstFieldError: true
+    },
+    config
+  );
+
   if (config.validateOnChange) {
-    afterUpdate(() => walkThroughFields(fn, storeValue, config));
+    afterUpdate(() =>
+      walkThroughFields(fn, storeValue, initialFieldsData, config)
+    );
   }
 
-
   if (config.initCheck) {
-    walkThroughFields(fn, storeValue, config);
+    walkThroughFields(fn, storeValue, initialFieldsData, config);
   }
 
   return {
-    subscribe, set, update,
+    subscribe,
+    set,
+    update,
 
     validate() {
-      walkThroughFields(fn, storeValue, config);  
+      walkThroughFields(fn, storeValue, initialFieldsData, config);
     }
   };
 }
 
-function walkThroughFields(fn, observable, config) {
+function walkThroughFields(fn, observable, initialFieldsData, config) {
   const fields = fn.call();
-  const returnedObject = { oldValues: {}, dirty: false };
   const context = get(observable);
+  const returnedObject = {
+    fields: {},
+    oldFields: {},
+    dirty: false
+  };
 
-  returnedObject.dirty = context.dirty;
+  Object.keys(fields).some((key) => {
+    const field = {
+      name: key,
+      ...fields[key]
+    };
+    const oldField = context.fields[key] || {
+      data: {},
+      errors: [],
+      pending: false,
+      valid: true,
+      enabled: true
+    };
+    const initialFieldData = initialFieldsData[key];
 
-  Object.keys(fields).forEach(key => {
-    const value = getValue(fields[key]);
-    const enabled = fields[key].enabled;
-    const oldValue = context.oldValues[key] || { value: undefined, enabled: true };
+    const value = getValue(field);
+    const oldValue = getValue(oldField);
+    const enabled = field.enabled;
+    const oldEnabled = oldField.enabled;
 
-    if (enabled !== oldValue.enabled || value !== oldValue.value) {
-      returnedObject[key] = field(key, fields[key], observable, config);
-    }
-    else {
-      returnedObject[key] = context[key];
-        
+    if (enabled !== oldEnabled || value !== oldValue) {
+      returnedObject.fields[key] = validateField(field, observable, config);
+    } else {
+      returnedObject.fields[key] = context.fields[key];
+
       if (!enabled) {
-        returnedObject[key].valid = true;
-        returnedObject[key].errors = [];
+        returnedObject.fields[key].valid = true;
+        returnedObject.fields[key].errors = [];
       }
     }
 
-    returnedObject.oldValues[key] = { value, enabled };
-    
-    if (!context.dirty && oldValue.value !== undefined && value !== oldValue.value) {
+    if (value !== initialFieldData.value) {
       returnedObject.dirty = true;
+    }
+
+    returnedObject.oldFields[key] = Object.assign({}, oldField);
+
+    if (config.stopAtFirstError) {
+      return !returnedObject.fields[key].valid;
     }
   });
 
-  returnedObject.valid = !Object.keys(returnedObject).find(f => {
-    if (['oldValues', 'dirty'].includes(f)) return false;
-    return !returnedObject[f].valid;
-  });
+  returnedObject.valid = !Object.keys(returnedObject.fields).find(
+    (f) => !returnedObject.fields[f].valid
+  );
 
   observable.set(returnedObject);
 }
-
