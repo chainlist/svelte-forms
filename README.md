@@ -12,34 +12,38 @@ or
 
 ### Basic
 
+The `form` function needs a callback that returns a [fields configuration object](#fieldsConfigurationObject).
+
 ```html
 <script>
-  import { form } from 'svelte-forms';
+  import { form, bindClass } from 'svelte-forms';
 
-  let name = "";
+  let name = '';
 
   const myForm = form(() => ({
-    name: { value: name, validators: ["required", "min:6"]},
+    name: { value: name, validators: ['required'] }
   }));
 </script>
 
-<form>
-  <input type="text" bind:value={value} use:bindClass={{ form: myForm }}/>
+<style>
+  :global(input.invalid) {
+    border-color: red;
+  }
+</style>
 
-  {#if $myForm.name.errors.includes('required') }
-    <p>The name is required</p>
-  {/if}
-  
-  {#if $myForm.name.errors.includes('min') }
-    <p>The name should be at least 6 characters</p>
-  {/if}
-  <button bind:disabled={!$myForm.valid}>Login</button>
+<form>
+  <input
+    type="text"
+    name="name"
+    bind:value={name}
+    use:bindClass={{ form: myForm }} />
+
+  <button disabled="{!$myForm.valid}">Login</button>
 </form>
 ```
 
 ### Advanced
 
-The form function takes a callback that returns a [fields configuration](#fieldsConfigurationObject) object.
 ```html
 <script>
   import { form } from 'svelte-forms';
@@ -47,65 +51,94 @@ The form function takes a callback that returns a [fields configuration](#fields
   let name = "";
   let email = "";
 
-  const usernameIsTaken = async function(value) {
-    return fetch('https://jsonplaceholder.typicode.com/users?username='+value)
-    .then(d => d.json())
-    .then(d => {
-      return { rule: 'usernameIsTaken', valid: !d.length};
-    });
-  }
+  const usernameIsNotTaken = async value =>
+    fetch(`https://jsonplaceholder.typicode.com/users?username=${value}`)
+      .then(d => d.json())
+      .then(d => ({
+        name: "usernameIsNotTaken",
+        valid: !d.length
+      }));
 
-  const loginForm = form(() => ({
-    name: { value: name, validators: ["required", "min:6"]},
-    email: { value: email, validators: ["required", "email"]}
-  }));
+  const loginForm = form(
+    () => ({
+      name: {
+        value: name,
+        validators: ["required", "min:6", usernameIsNotTaken]
+      },
+      email: { value: email, validators: ["required", "email"] }
+    }),
+    {
+      initCheck: true,
+      validateOnChange: false,
+      stopAtFirstError: false,
+      stopAtFirstFieldError: false
+    }
+  );
 </script>
 
 <form>
-  <input type="text" bind:value={value}/>
-  <input type="email" class:valid={$loginForm.email.valid}/>
+  <input type="text" bind:value={name} />
 
-  {#if $loginForm.email.errors.includes('email') }
-    <p>The email is invalid</p>
+  {#if $loginForm.fields.name.errors.includes('required')}
+    <p>The name is required</p>
   {/if}
 
-  {#if $loginForm.name.errors.includes('min') }
+  {#if $loginForm.fields.name.errors.includes('min')}
     <p>The name should be at least 6 characters</p>
   {/if}
 
-  <button bind:disabled={!$loginForm.valid}>Login</button>
+  {#if $loginForm.fields.name.pending}
+    <p>Checking name availability..</p>
+  {/if}
+
+  {#if $loginForm.fields.name.errors.includes('usernameIsNotTaken')}
+    <p>This username is already taken</p>
+  {/if}
+
+  <input
+    type="email"
+    bind:value={email}
+    class:valid={$loginForm.fields.email.valid} />
+
+  {#if $loginForm.fields.email.errors.includes('email')}
+    <p>The email is invalid</p>
+  {/if}
+
+  <button on:click|preventDefault={() => loginForm.validate()}>
+    Validate form
+  </button>
+  <button disabled={!$loginForm.valid}>Login</button>
 </form>
 ```
 
 ## API
 
-### `form(callback: () => fieldConfigurationObject, { stopAtFirstError: boolean } ): StoreObservable`
+### `form(callback: () => fieldConfigurationObject, config ): StoreObservable`
 
 Creates a new form validator and returns a store observable, thus you can automatically subscribe with the famous `$` reserved token.
 
-The store value represent a [fields validation object](#formValidationObject)
+The store value represents a [form validation object](#formValidationObject).
 
-As second parameter you can pass an object with the following properties
+As second parameter you can pass a configuration object with the following properties
 
-* `stopAtFirstError: boolean`: If you have many validators on a field, it will stop and do not check the remaining validators at the first failure. Default is `true`
+| property                | description                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `stopAtFirstError`      | Stops validation after first error encountered. Default: `false`                |
+| `stopAtFirstFieldError` | Stops validation after first error encountered per field. Default: `true`       |
+| `initCheck`             | Tells the form to validate or not the fields at initialization. Default: `true` |
+| `validateOnChange`      | Tells the form to validate after changes to fields. Default: `true`             |
 
-| property   | description                                                                  |
-|------------|------------------------------------------------------------------------------|
-| `stopAtFirstError`      | Tells if the validators should stop at the first encountered error. Default: `true`                                              |
-| `initCheck` | Tells the form to validate or not the fields at initialization. Default: `true` |
-| `validateOnChange`    | Tells the form to validate or not fields on every changes on the fields. If you want to manually run the validation. Default: `true` |
-
-The form comes with an handy function `validate` the performs a validation on call.
+The form comes with a handy function `validate` that performs a validation on call.
 
 ```javascript
-const myForm = form(() => ({ name: { value: '', validators: ['required']} }));
+const myForm = form(() => ({ name: { value: '', validators: ['required'] } }));
 
 function manualValidation() {
   myForm.validate();
 }
 ```
 
-### `bindClass({ form: StoreObservable, , name: string, valid: string = 'valid', invalid: string = 'invalid' })`
+### `bindClass({ form: StoreObservable, name: string, valid: string = 'valid', invalid: string = 'invalid' })`
 
 > ```html
 > <input type="text" name="username" use:bindClass={{ form: loginForm }} />
@@ -113,9 +146,9 @@ function manualValidation() {
 > ```
 
 Automatically adds `valid` or `invalid` (default value) classes to the input **IF**
-the form is dirty **AND** every rules are matched.
+the form is dirty **AND** every rule is matched.
 
-If `bindClass` is use on a DOM node that has an attribute `name`, it will check for this field.
+If `bindClass` is used on a DOM node that has an attribute `name`, it will check for this field.
 Otherwise you can set the field by setting the `name` parameter.
 
 You can override the classes by passing the parameters `valid` and `invalid`.
@@ -124,146 +157,161 @@ You can override the classes by passing the parameters `valid` and `invalid`.
 > <input type="text" use:bindClass={{ form: loginForm, valid: 'ok', invalid: 'ko' }} />
 > ```
 
-## <a name="fieldsConfigurationObject"></a>Fields configuration Object
+### <a name="fieldsConfigurationObject"></a>Fields configuration Object
 
 The keys of the object represent the name of the fields and their [validator configurations](#validatorConfigurationObject)
 
 ```javascript
-{ name: { value: name, validators: ['requred'], enabled: true } }
+{ name: { value: name, validators: ['required'], enabled: true, ...data } }
 ```
 
-## <a name="validatorConfigurationObject"></a>Validator configuration object
+### <a name="validatorConfigurationObject"></a>Validator configuration object
 
-| property   | description                                                                  |
-|------------|------------------------------------------------------------------------------|
-| `value`      | Reference the value to be check                                              |
+| property     | description                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------ |
+| `value`      | Reference the value to be check                                                                              |
 | `validators` | An array representing the validations that need to be performed on the field. See [@validators](#validators) |
-| `enabled`    | Boolean defining if the field should be check on the next validation process. Default `true` |
+| `enabled`    | Boolean defining if the field should be included in the validation process. Default `true`                   |
 
-## <a name="formValidationObject"></a>Form validation object
+Additional data may be included here (but has no effect).
 
-They keys of the object represent the name of the fields as described in the [fields configuration object](#fieldsConfigurationObject) and the following properties
+### <a name="formValidationObject"></a>Form validation object
 
-| property | type    | description                                                                                              |
-|----------|---------|----------------------------------------------------------------------------------------------------------|
-| `valid`    | *boolean* | If the field is valid or not                                                                             |
-| `errors`   | *Array*   | An array representing the errors name in case if the field is invalid                                    |
-| `pending`  | *boolean* | If one of the validator is an async function, pending will be true until the validator has been resolved |
+| property    | type      | description                                                                                                                                                                                                                                |
+| ----------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `valid`     | _boolean_ | If the form is valid or not                                                                                                                                                                                                                |
+| `dirty`     | _boolean_ | If any field has a different value than when the form was initialized                                                                                                                                                                      |
+| `fields`    | _Object_  | An object where the keys are the names as described in the [fields configuration object](#fieldsConfigurationObject) and their respective [field validation objects](#fieldValidationObject) which represent the current state of the form |
+| `oldFields` | _Object_  | An object where the keys are the names as described in the [fields configuration object](#fieldsConfigurationObject) and their respective [field validation objects](#fieldValidationObject) which represent the last state of the form    |
 
-In addition there are 2 reserved properties: `valid` and `dirty`.
+````javascript
+let name = '';
 
-
-```javascript
-let name = "";
 const loginForm = form(() => ({
-  name: { value: name, validators: ['required', 'min:3']}
+  name: { value: name, validators: ['required', 'min:3'], extraData: '' }
 }));
 
-$loginForm.valid; // if every field are valid
-$loginForm.dirty; // if at least one of the fields has been modified
-$loginForm.name.valid;
-$loginForm.name.pending;
-$loginForm.name.errors; // ['required', 'min']
-```
+// Form
+$loginForm.valid; // false
+$loginForm.dirty; // false
 
-# <a name="validators"></a>Validators
+// Current state of name field
+$loginForm.fields.name.valid; // false
+$loginForm.fields.name.pending; // false
+$loginForm.fields.name.errors; // ['required', 'min']
+$loginForm.fields.name.enabled; // true
+$loginForm.fields.name.data; //  { value, validators, extraData }```
+````
 
-## between `"between:numberA:numberB"`
+### <a name="fieldValidationObject"></a>Field validation object
+
+An object that represents a validated field.
+
+| property  | type      | description                                                                          |
+| --------- | --------- | ------------------------------------------------------------------------------------ |
+| `valid`   | _boolean_ | If the field is valid or not                                                         |
+| `errors`  | _Array_   | An array representing the errors name in case if the field is invalid                |
+| `pending` | _boolean_ | If there are any async validators, will be true until all of them have been resolved |
+| `enabled` | _boolean_ | If the field is enabled or not                                                       |
+| `data`    | _object_  | The validator configuration object                                                   |
+
+## <a name="validators"></a>Validators
+
+### between `"between:numberA:numberB"`
 
 > ```javascript
-> { validators: ["between:3:16"] }`
+> { validators: ['between:3:16'] }`
 > ```
 
 If the value is a number, checks the number is between `numberA` and `numberB`
 
 If the value is a string, checks the string length is between `numberA` and `numberB`
 
-## email `"email"`
+### email `"email"`
 
 > ```javascript
-> { validators: ["email"] }`
+> { validators: ['email'] }`
 > ```
 
 Check the value is an email
 
-## equal `"equal:number"`
+### equal `"equal:number"`
 
 > ```javascript
-> { validators: ["equal:42"] }`
+> { validators: ['equal:42'] }`
 > ```
 
 If the value is a number, checks the number is equal to `number`
 
 If the value is a string, checks the string length is equal to `number`
 
-## min `"min:number"`
+### min `"min:number"`
 
 > ```javascript
-> { validators: ["min:42"] }`
+> { validators: ['min:42'] }`
 > ```
 
 If the value is a number, checks the number is greater than `number`
 
 If the value is a string, checks the string length is greater than `number`
 
-## max `"max:number"`
+### max `"max:number"`
 
 > ```javascript
-> { validators: ["max:42"] }`
+> { validators: ['max:42'] }`
 > ```
 
 If the value is a number, checks the number is lesser than `number`
 
 If the value is a string, checks the string length is lesser than `number`
 
-## required `"required"`
+### required `"required"`
 
 > ```javascript
-> { validators: ["required"] }`
+> { validators: ['required'] }`
 > ```
 
 Mark the field as required
 
-## url `"url"`
+### url `"url"`
 
 > ```javascript
-> { validators: ["url"] }`
->```
+> { validators: ['url'] }`
+> ```
 
 Check the value is an URL
 
-## Custom validator
+### Custom validator
 
 If you want to use your own validator, you can pass a function, it will receive the value to be checked as parameter.
 
-You must returned an object as follow: `{ valid: boolean, name: string }`
+It must return an object as follow: `{ valid: boolean, name: string }`
 
 `valid`: describes if the condition is matched
 `name`: the name of the validator in case of failure
 
 ```javascript
-const foobar = value => ({ valid: value === "toto", name: "foorbar" });
+const empty = value => ({ valid: value === '', name: 'empty' });
 
 {
   name: {
     value: name,
-    validators: [foorbar]
+    validators: [empty]
   }
 }
 ```
 
 You can of course mix regular validators and custom validators.
 
-## Async validator
+### Async validator
 
 Nothing more to do, just mark your function as `async` or return a `Promise`.
 
-`svelte-forms` will handle the things for you.
+`svelte-forms` will handle things for you.
 
-In addition, there will be a `pending` property inside the field validation object telling if the validator has been done or is till pending.
-
+In addition, there will be a `pending` property inside the field validation object telling if the validator has been resolved or is still pending.
 
 ## TODO
 
-* Testing
-* Examples
+- Testing
+- Examples

@@ -25,14 +25,16 @@ function validate(fieldName, value, validator, observable, enabled = true) {
       pending = true;
       resp.then(({ name, valid }) => {
         observable.update((n) => {
-          n[fieldName] = n[fieldName] || { errors: [] };
+          n.fields[fieldName] = n.fields[fieldName] || { errors: [] };
 
-          n[fieldName].pending = false;
-          n[fieldName].valid = valid;
+          n.fields[fieldName].pending = false;
+          n.fields[fieldName].valid = valid;
 
           if (!valid) {
-            n[fieldName].errors.push(name);
+            n.fields[fieldName].errors.push(name);
           }
+
+          n.valid = !Object.keys(n.fields).find((f) => !n.fields[f].valid);
 
           return n;
         });
@@ -67,6 +69,7 @@ function validateField(data, observable, { stopAtFirstFieldError }) {
       );
 
       if (!pending && isPending) {
+        valid = false;
         pending = true;
       }
 
@@ -88,17 +91,20 @@ export function bindClass(
 ) {
   const key = name || node.getAttribute('name');
 
+  console.debug({ node, form, name, key });
+
   const unsubscribe = form.subscribe((context) => {
-    if (context.dirty && context[key] && context[key].valid) {
+    if (!context.fields.hasOwnProperty(key)) {
+      return;
+    }
+    const field = context.fields[key];
+
+    if (field.valid) {
       node.classList.add(valid);
+      node.classList.remove(invalid);
     } else {
       node.classList.remove(valid);
-    }
-
-    if (context.dirty && context[key] && !context[key].valid) {
       node.classList.add(invalid);
-    } else {
-      node.classList.remove(invalid);
     }
   });
 
@@ -112,7 +118,7 @@ export function form(fn, config = {}) {
   const initialFieldsData = Object.fromEntries(
     Object.keys(fields).map((key) => [
       key,
-      { name: fields[key].name, value: fields[key].value }
+      { name: fields[key].name || key, value: fields[key].value }
     ])
   );
 
@@ -120,7 +126,7 @@ export function form(fn, config = {}) {
     fields: {},
     oldFields: {},
     dirty: false,
-    valid: true,
+    valid: true
   });
   const { subscribe, set, update } = storeValue;
   config = Object.assign(
@@ -150,7 +156,7 @@ export function form(fn, config = {}) {
 
     validate() {
       walkThroughFields(fn, storeValue, initialFieldsData, config);
-    },
+    }
   };
 }
 
@@ -160,11 +166,14 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
   const returnedObject = {
     fields: {},
     oldFields: {},
-    dirty: false,
+    dirty: false
   };
 
   Object.keys(fields).some((key) => {
-    const field = fields[key];
+    const field = {
+      name: key,
+      ...fields[key]
+    };
     const oldField = context.fields[key] || {
       data: {},
       errors: [],
@@ -194,7 +203,7 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
       returnedObject.dirty = true;
     }
 
-    returnedObject.oldFields[key] = oldField;
+    returnedObject.oldFields[key] = Object.assign({}, oldField);
 
     if (config.stopAtFirstError) {
       return !returnedObject.fields[key].valid;
