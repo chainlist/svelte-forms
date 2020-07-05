@@ -8,6 +8,10 @@ or
 
 `yarn add -D svelte-forms`
 
+## Update notes
+
+As of version 1.1.0, the [field validation objects](#fieldValidationObject) are no longer directly located inside of the [form validation object](#formValidationObject) but rather in a sub-property of it (`fields`).
+
 ## How to use
 
 ### Basic
