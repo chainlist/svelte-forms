@@ -91,8 +91,6 @@ export function bindClass(
 ) {
   const key = name || node.getAttribute('name');
 
-  console.debug({ node, form, name, key });
-
   const unsubscribe = form.subscribe((context) => {
     if (!context.fields.hasOwnProperty(key)) {
       return;
