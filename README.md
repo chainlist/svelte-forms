@@ -142,15 +142,16 @@ function manualValidation() {
 }
 ```
 
-### `bindClass({ form: StoreObservable, name: string, valid: string = 'valid', invalid: string = 'invalid' })`
+### `bindClass({ form: StoreObservable, name: string, valid: string = 'valid', invalid: string = 'invalid', dirty: string = 'dirty' })`
 
 > ```html
 > <input type="text" name="username" use:bindClass={{ form: loginForm }} />
 > <input type="text" use:bindClass={{ form: loginForm, name: "username" }} />
 > ```
 
-Automatically adds `valid` or `invalid` (default value) classes to the input **IF**
-the form is dirty **AND** every rule is matched.
+Automatically adds `valid` or `invalid` and `dirty` (default value) classes to the input:
+* Adds `valid` or `invalid` **IF** the form is dirty **AND** every rule is matched.
+* Adds `dirty` if field is dirty.
 
 If `bindClass` is used on a DOM node that has an attribute `name`, it will check for this field.
 Otherwise you can set the field by setting the `name` parameter.
