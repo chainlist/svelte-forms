@@ -86,8 +86,7 @@ function validateField(data, observable, { stopAtFirstFieldError }) {
 }
 
 export function bindClass(
-  node,
-  { form, name, valid = 'valid', invalid = 'invalid' }
+  node, { form, name = undefined, valid = 'valid', invalid = 'invalid', dirty = 'dirty' }
 ) {
   const key = name || node.getAttribute('name');
 
@@ -103,6 +102,11 @@ export function bindClass(
     } else {
       node.classList.remove(valid);
       node.classList.add(invalid);
+    }
+    if (field.dirty) {
+      node.classList.add(dirty);
+    } else {
+      node.classList.remove(dirty);
     }
   });
 
@@ -177,7 +181,8 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
       errors: [],
       pending: false,
       valid: true,
-      enabled: true
+      enabled: true,
+      dirty: false
     };
     const initialFieldData = initialFieldsData[key];
 
@@ -200,6 +205,7 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
     if (value !== initialFieldData.value) {
       returnedObject.dirty = true;
     }
+    returnedObject.fields[key].dirty = value !== initialFieldData.value;
 
     returnedObject.oldFields[key] = Object.assign({}, oldField);
 
