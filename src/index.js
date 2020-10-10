@@ -191,7 +191,7 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
     const enabled = field.enabled;
     const oldEnabled = oldField.enabled;
 
-    if (enabled !== oldEnabled || value !== oldValue) {
+    if (enabled !== oldEnabled || (!value || value !== oldValue)) {
       returnedObject.fields[key] = validateField(field, observable, config);
     } else {
       returnedObject.fields[key] = context.fields[key];
