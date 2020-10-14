@@ -1,9 +1,8 @@
 module.exports = {
-  setupFiles: ['jest-localstorage-mock'],
   transformIgnorePatterns: ['/node_modules/', '/cypress/'],
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-    '^.+\\.svelte$': 'jest-transform-svelte',
+    '^.+\\.js$': 'babel-jest',
+    '^.+\\.svelte$': 'svelte-jester'
   },
   globals: {
     svelte: {
@@ -12,4 +11,6 @@ module.exports = {
       },
     },
   },
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  moduleFileExtensions: ['js', 'svelte']
 };
