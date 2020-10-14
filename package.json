@@ -41,6 +41,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/chainlist/svelte-forms"
-  },
-  "dependencies": {}
+  }
 }
