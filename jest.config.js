@@ -7,10 +7,13 @@ module.exports = {
   globals: {
     svelte: {
       compilerOptions: {
-        accessors: true,
-      },
-    },
+        accessors: true
+      }
+    }
   },
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom/extend-expect',
+    './tests/testSetup'
+  ],
   moduleFileExtensions: ['js', 'svelte']
 };

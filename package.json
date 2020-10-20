@@ -22,6 +22,7 @@
     "@testing-library/svelte": "^3.0.0",
     "@testing-library/user-event": "^12.1.7",
     "babel-jest": "^24.8.0",
+    "fromentries": "^1.2.1",
     "jest": "^24.9.0",
     "jest-in-case": "^1.0.2",
     "jest-localstorage-mock": "^2.4.0",
