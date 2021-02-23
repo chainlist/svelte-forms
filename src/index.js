@@ -124,14 +124,6 @@ export function form(fn, config = {}) {
       { name: fields[key].name || key, value: fields[key].value }
     ])
   );
-
-  const storeValue = writable({
-    fields: {},
-    oldFields: {},
-    dirty: false,
-    valid: true
-  });
-  const { subscribe, set, update } = storeValue;
   config = Object.assign(
     {
       initCheck: true,
@@ -142,7 +134,14 @@ export function form(fn, config = {}) {
     config
   );
 
-  storeValue.update(value => ({ ...value, initCheck: config.initCheck }));
+  const storeValue = writable({
+    fields: {},
+    oldFields: {},
+    dirty: false,
+    valid: true,
+    initCheck: config.initCheck
+  });
+  const { subscribe, set, update } = storeValue;
 
   if (config.validateOnChange) {
     afterUpdate(() =>
