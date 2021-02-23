@@ -132,13 +132,16 @@ As second parameter you can pass a configuration object with the following prope
 | `initCheck`             | Tells the form to validate or not the fields at initialization. Default: `true` |
 | `validateOnChange`      | Tells the form to validate after changes to fields. Default: `true`             |
 
-The form comes with a handy function `validate` that performs a validation on call.
+The form comes with a handy functions:
+*  `validate` that performs a validation on call.
+* `reset` that reset the form if needed.
 
 ```javascript
 const myForm = form(() => ({ name: { value: '', validators: ['required'] } }));
 
 function manualValidation() {
   myForm.validate();
+  myForm.reset();
 }
 ```
 
