@@ -95,13 +95,14 @@ export function bindClass(
       return;
     }
     const field = context.fields[key];
-
-    if (field.valid) {
-      node.classList.add(valid);
-      node.classList.remove(invalid);
-    } else {
-      node.classList.remove(valid);
-      node.classList.add(invalid);
+    if ((!context.initCheck && field.dirty) || context.initCheck) {
+      if (field.valid) {
+        node.classList.add(valid);
+        node.classList.remove(invalid);
+      } else {
+        node.classList.remove(valid);
+        node.classList.add(invalid);
+      }
     }
     if (field.dirty) {
       node.classList.add(dirty);
@@ -141,6 +142,8 @@ export function form(fn, config = {}) {
     config
   );
 
+  storeValue.update(value => ({ ...value, initCheck: config.initCheck }));
+
   if (config.validateOnChange) {
     afterUpdate(() =>
       walkThroughFields(fn, storeValue, initialFieldsData, config)
@@ -168,7 +171,8 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
   const returnedObject = {
     fields: {},
     oldFields: {},
-    dirty: false
+    dirty: false,
+    initCheck: config.initCheck
   };
 
   Object.keys(fields).some((key) => {
