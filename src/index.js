@@ -95,13 +95,14 @@ export function bindClass(
       return;
     }
     const field = context.fields[key];
-
-    if (field.valid) {
-      node.classList.add(valid);
-      node.classList.remove(invalid);
-    } else {
-      node.classList.remove(valid);
-      node.classList.add(invalid);
+    if ((!context.initCheck && field.dirty) || context.initCheck) {
+      if (field.valid) {
+        node.classList.add(valid);
+        node.classList.remove(invalid);
+      } else {
+        node.classList.remove(valid);
+        node.classList.add(invalid);
+      }
     }
     if (field.dirty) {
       node.classList.add(dirty);
@@ -123,14 +124,6 @@ export function form(fn, config = {}) {
       { name: fields[key].name || key, value: fields[key].value }
     ])
   );
-
-  const storeValue = writable({
-    fields: {},
-    oldFields: {},
-    dirty: false,
-    valid: true
-  });
-  const { subscribe, set, update } = storeValue;
   config = Object.assign(
     {
       initCheck: true,
@@ -140,6 +133,15 @@ export function form(fn, config = {}) {
     },
     config
   );
+
+  const storeValue = writable({
+    fields: {},
+    oldFields: {},
+    dirty: false,
+    valid: true,
+    initCheck: config.initCheck
+  });
+  const { subscribe, set, update } = storeValue;
 
   if (config.validateOnChange) {
     afterUpdate(() =>
@@ -168,7 +170,8 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
   const returnedObject = {
     fields: {},
     oldFields: {},
-    dirty: false
+    dirty: false,
+    initCheck: config.initCheck
   };
 
   Object.keys(fields).some((key) => {
