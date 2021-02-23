@@ -118,7 +118,7 @@ export function bindClass(
 
 export function form(fn, config = {}) {
   const fields = fn.call();
-  const initialFieldsData = Object.fromEntries(
+  let initialFieldsData = Object.fromEntries(
     Object.keys(fields).map((key) => [
       key,
       { name: fields[key].name || key, value: fields[key].value }
@@ -159,6 +159,17 @@ export function form(fn, config = {}) {
     update,
 
     validate() {
+      walkThroughFields(fn, storeValue, initialFieldsData, config);
+    },
+
+    reset() {
+      const fields = fn.call();
+      initialFieldsData = Object.fromEntries(
+        Object.keys(fields).map((key) => [
+          key,
+          { name: fields[key].name || key, value: fields[key].value }
+        ])
+      );
       walkThroughFields(fn, storeValue, initialFieldsData, config);
     }
   };
