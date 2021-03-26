@@ -123,14 +123,31 @@ export function bindClass(
   };
 }
 
-export function form(fn, config = {}) {
-  const fields = fn.call();
-  let initialFieldsData = Object.fromEntries(
+function getInitialFieldsData(fields) {
+  const defaultFields = {
+    data: {},
+    errors: [],
+    pending: false,
+    valid: true,
+    enabled: true,
+    dirty: false
+  };
+  return Object.fromEntries(
     Object.keys(fields).map((key) => [
       key,
-      { name: fields[key].name || key, value: fields[key].value }
+      {
+        name: fields[key].name || key,
+        value: fields[key].value,
+        ...defaultFields
+      }
     ])
   );
+}
+
+export function form(fn, config = {}) {
+  const fields = fn.call();
+  let initialFieldsData = getInitialFieldsData(fields);
+
   config = Object.assign(
     {
       initCheck: true,
@@ -142,7 +159,7 @@ export function form(fn, config = {}) {
   );
 
   const storeValue = writable({
-    fields: {},
+    fields: initialFieldsData,
     oldFields: {},
     dirty: false,
     valid: true,
@@ -171,12 +188,7 @@ export function form(fn, config = {}) {
 
     reset() {
       const fields = fn.call();
-      initialFieldsData = Object.fromEntries(
-        Object.keys(fields).map((key) => [
-          key,
-          { name: fields[key].name || key, value: fields[key].value }
-        ])
-      );
+      initialFieldsData = getInitialFieldsData(fields);
       walkThroughFields(fn, storeValue, initialFieldsData, config);
     }
   };
@@ -186,7 +198,7 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
   const fields = fn.call();
   const context = get(observable);
   const returnedObject = {
-    fields: {},
+    fields: initialFieldsData,
     oldFields: {},
     dirty: false,
     initCheck: config.initCheck
