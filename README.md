@@ -36,11 +36,8 @@ The `form` function needs a callback that returns a [fields configuration object
 </style>
 
 <form>
-  <input
-    type="text"
-    name="name"
-    bind:value={name}
-    use:bindClass={{ form: myForm }} />
+  <input type="text" name="name" bind:value={name} use:bindClass={{ form: myForm
+  }} />
 
   <button disabled="{!$myForm.valid}">Login</button>
 </form>
@@ -115,6 +112,32 @@ The `form` function needs a callback that returns a [fields configuration object
 </form>
 ```
 
+### SSR and SvelteKit
+
+[SvelteKit](https://kit.svelte.dev/docs) is the next iteration avec little brother of [Sapper](https://sapper.svelte.dev/), but `svelte-forms` doesn't work out of the box and a minor configuration change is needed.
+
+In order to be able to use `svelte-forms` with svelte-kit and avoid the infamouse: `Function called outside of component initialization` you will _have_ to disable the `updateOnChange` configuration to `false` and manually launch a validation after each update of your component.
+Because your component is mounted server-side & hydrated client-side, this has to be done in `onMount` function.
+
+```html
+<script>
+  import { onMount, afterUpdate } from 'svelte';
+  import { form } from 'svelte-forms';
+
+  let myForm;
+
+  onMount(() => {
+    myForm = form(() => ({}), {
+      validateOnChange: false
+    });
+  });
+
+  afterUpdate(() => {
+    myForm.validate();
+  });
+</script>
+```
+
 ## API
 
 ### `form(callback: () => fieldConfigurationObject, config ): StoreObservable`
@@ -133,8 +156,9 @@ As second parameter you can pass a configuration object with the following prope
 | `validateOnChange`      | Tells the form to validate after changes to fields. Default: `true`             |
 
 The form comes with a handy functions:
-*  `validate` that performs a validation on call.
-* `reset` that reset the form if needed.
+
+- `validate` that performs a validation on call.
+- `reset` that reset the form if needed.
 
 ```javascript
 const myForm = form(() => ({ name: { value: '', validators: ['required'] } }));
@@ -153,8 +177,9 @@ function manualValidation() {
 > ```
 
 Automatically adds `valid` or `invalid` and `dirty` (default value) classes to the input:
-* Adds `valid` or `invalid` **IF** the form is dirty **AND** every rule is matched.
-* Adds `dirty` if field is dirty.
+
+- Adds `valid` or `invalid` **IF** the form is dirty **AND** every rule is matched.
+- Adds `dirty` if field is dirty.
 
 If `bindClass` is used on a DOM node that has an attribute `name`, it will check for this field.
 Otherwise you can set the field by setting the `name` parameter.
@@ -162,7 +187,8 @@ Otherwise you can set the field by setting the `name` parameter.
 You can override the classes by passing the parameters `valid` and `invalid`.
 
 > ```html
-> <input type="text" use:bindClass={{ form: loginForm, valid: 'ok', invalid: 'ko' }} />
+> <input type="text" use:bindClass={{ form: loginForm, valid: 'ok', invalid:
+> 'ko' }} />
 > ```
 
 ### <a name="fieldsConfigurationObject"></a>Fields configuration Object

@@ -1,4 +1,4 @@
-import { afterUpdate } from 'svelte';
+import { afterUpdate, onMount } from 'svelte';
 import { writable, get } from 'svelte/store';
 import * as rules from './rules';
 
@@ -168,9 +168,9 @@ export function form(fn, config = {}) {
   const { subscribe, set, update } = storeValue;
 
   if (config.validateOnChange) {
-    afterUpdate(() =>
-      walkThroughFields(fn, storeValue, initialFieldsData, config)
-    );
+    afterUpdate(() => {
+      walkThroughFields(fn, storeValue, initialFieldsData, config);
+    });
   }
 
   if (config.initCheck) {
