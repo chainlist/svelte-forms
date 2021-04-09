@@ -153,7 +153,8 @@ export function form(fn, config = {}) {
       initCheck: true,
       validateOnChange: true,
       stopAtFirstError: false,
-      stopAtFirstFieldError: true
+      stopAtFirstFieldError: true,
+      isSSR: false,
     },
     config
   );
@@ -167,7 +168,7 @@ export function form(fn, config = {}) {
   });
   const { subscribe, set, update } = storeValue;
 
-  if (config.validateOnChange) {
+  if (config.validateOnChange && !config.isSSR) {
     afterUpdate(() => {
       walkThroughFields(fn, storeValue, initialFieldsData, config);
     });
