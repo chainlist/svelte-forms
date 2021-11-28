@@ -1,3 +1,4 @@
-export type Validation = { valid: boolean; name: string };
+export type FieldValidation = { valid: boolean; name: string };
+export type Validator = (value: any) => FieldValidation | Promise<FieldValidation>;
 
-export type Validator<T> = (...args: any[]) => Validation | Promise<Validation>;
+export type ValidatorFactory = (...args: any[]) => Validator | Promise<Validator>;

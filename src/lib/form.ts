@@ -9,7 +9,7 @@ export type Form = {
 };
 
 export function form(...fields: Writable<Field<any>>[]) {
-	return derived(fields, (values) => ({
+	const store = derived(fields, (values) => ({
 		valid: values.every((value) => value.valid),
 		dirty: values.some((value) => value.dirty),
 		errors: values
@@ -17,8 +17,21 @@ export function form(...fields: Writable<Field<any>>[]) {
 				return value.errors.map((e) => `${value.name}.${e}`);
 			})
 			.flat(),
+
 		hasError(this: Form, name: string) {
 			return this.errors.findIndex((e) => e === name) !== -1;
 		}
 	}));
+
+	const { subscribe } = store;
+
+	function reset() {
+		fields.forEach((field: any) => field.reset());
+	}
+
+	function validate() {
+		fields.forEach((field: any) => field.validate());
+	}
+
+	return { subscribe, reset, validate };
 }

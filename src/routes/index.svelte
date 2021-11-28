@@ -1,29 +1,36 @@
 <script lang="ts">
 	import { field } from '$lib/field';
 	import { form } from '$lib/form';
+	import { email as emailValidator } from '$lib/validators/email';
+	import { min } from '$lib/validators/min';
 	import { required } from '$lib/validators/required';
-	import { url } from '$lib/validators/url';
 
-	function pwd(value: string) {
-		return { valid: value === 'pwd', name: 'pwd' };
+	function checkName() {
+		return async (value: string) => {
+			const users: any[] = await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
+				r.json()
+			);
+
+			return {
+				valid: !users.find((d) => d.name === value),
+				name: 'already_taken'
+			};
+		};
 	}
 
-	async function checkName(value: string) {
-		const users: any[] = await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
-			r.json()
-		);
-
-		return { valid: !users.find((d) => d.name === value), name: 'already_taken' };
-	}
-
-	const name = field('name', '', [required, url]);
-
-	const myForm = form(name);
+	const name = field('name', '', [required(), min(3)]);
+	const email = field('email', '', [required(), emailValidator()]);
+	const myForm = form(name, email);
 </script>
 
 <h1>Svelte store test</h1>
 
 <div>{JSON.stringify($myForm)}</div>
+
+<button on:click={() => myForm.reset()}>Reset form</button>
+<button on:click={() => myForm.validate()}>Validate form</button>
+
+<br />
 
 <label for="name">
 	Name:
@@ -33,7 +40,14 @@
 		<div>Name is required</div>
 	{/if}
 
-	<button on:click={() => name.validate()}>Validate name</button>
-
 	<pre>{JSON.stringify($name, null, 2)}</pre>
+</label>
+
+<label for="email">
+	Email:
+	<input type="email" id="email" bind:value={$email.value} />
+	{#if $myForm.hasError('email.required')}
+		<div>Email is required</div>
+	{/if}
+	<pre>{JSON.stringify($email, null, 2)}</pre>
 </label>
