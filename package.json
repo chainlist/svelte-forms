@@ -1,55 +1,30 @@
 {
   "name": "svelte-forms",
-  "version": "1.1.51",
-  "description": "Svelte forms validations made easy",
-  "main": "dist/bundle.js",
-  "module": "dist/bundle.es6.js",
-  "author": "Kevin Guillouard <kevin.guillouard@gmail.com>",
-  "keywords": [
-    "svelte",
-    "forms",
-    "form",
-    "validations",
-    "validation",
-    "validators",
-    "validator"
-  ],
-  "private": false,
-  "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@testing-library/dom": "^7.24.5",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/svelte": "^3.0.0",
-    "@testing-library/user-event": "^12.1.7",
-    "babel-jest": "^24.8.0",
-    "fromentries": "^1.2.1",
-    "jest": "^24.9.0",
-    "jest-in-case": "^1.0.2",
-    "jest-localstorage-mock": "^2.4.0",
-    "jest-transform-svelte": "^2.0.2",
-    "rollup": "^2.44.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-svelte": "^7.1.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "svelte": "^3.0.0",
-    "svelte-jester": "^1.1.5"
-  },
-  "peerDependencies": {
-    "svelte": "^3.0.0"
-  },
+  "version": "0.0.1",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "build": "rollup -c"
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
+    "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
   },
-  "files": [
-    "dist",
-    "CHANGELOG.md"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chainlist/svelte-forms"
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "prettier": "^2.4.1",
+    "prettier-plugin-svelte": "^2.4.0",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.2.6",
+    "svelte-preprocess": "^4.9.4",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "is-promise": "^4.0.0",
+    "svelte2tsx": "^0.4.10"
   }
 }
