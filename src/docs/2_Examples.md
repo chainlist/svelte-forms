@@ -1,18 +1,8 @@
-# INSTALL
+---
+filename: 2_Examples.md
+---
 
-To install `svelte-forms` do one of the following commands:
-
-```bash
-npm install svelte-forms@2.0
-```
-
-```bash
-pnpm add svelte-forms@2.0
-```
-
-```bash
-yarn add svelte-forms@2.0
-```
+## some examples
 
 ```svelte
 <script>

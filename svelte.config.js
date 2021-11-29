@@ -2,6 +2,11 @@ import adapter from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
 import path from 'path';
 import mdPlugin from 'vite-plugin-markdown';
+import markdownIt from 'markdown-it';
+import anchor from 'markdown-it-anchor';
+
+const mdit = markdownIt();
+mdit.use(anchor);
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -22,7 +27,7 @@ const config = {
 			exports: (file) => file === 'index.ts'
 		},
 		vite: {
-			plugins: [mdPlugin.plugin({ mode: 'html' })],
+			plugins: [mdPlugin.plugin({ mode: ['html', 'toc'], markdownIt: mdit })],
 			resolve: {
 				alias: {
 					'svelte-forms': path.resolve('src/lib')

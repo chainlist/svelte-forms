@@ -10,18 +10,36 @@
 
 	html,
 	body {
-		width: 100%;
-		height: 100%;
 	}
 
 	#svelte {
-		display: grid;
-		grid-template-columns: 25rem 1fr;
+		/* display: grid;
+		grid-template-columns: 25rem 1fr; */
 		height: 100%;
 	}
 
 	h1 {
-		@apply w-full border-t-2 border-gray-300 mt-5 pt-5 text-4xl text-gray-700 tracking-widest font-semibold;
+		@apply w-full text-7xl mb-20 text-gray-700 tracking-widest font-normal;
+	}
+
+	h2 {
+		@apply w-full border-t-2 border-gray-300 pt-5 text-5xl text-gray-700 tracking-widest font-normal;
 		font-variant: small-caps;
+	}
+
+	p code {
+		@apply py-1 px-2 text-red-400 shadow;
+	}
+}
+
+@layer components {
+	.main-link {
+		@apply text-gray-700;
+		font-variant: small-caps;
+	}
+
+	.sub-link {
+		@apply text-gray-500;
+		@apply pl-5;
 	}
 }

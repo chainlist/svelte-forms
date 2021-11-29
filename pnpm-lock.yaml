@@ -6,6 +6,9 @@ specifiers:
   autoprefixer: ^10.3.7
   cssnano: ^5.0.8
   is-promise: ^4.0.0
+  lodash.kebabcase: ^4.1.1
+  markdown-it: ^12.2.0
+  markdown-it-anchor: ^8.4.1
   node-sass: ^6.0.1
   postcss: ^8.3.9
   postcss-load-config: ^3.1.0
@@ -24,6 +27,9 @@ specifiers:
 
 dependencies:
   is-promise: 4.0.0
+  lodash.kebabcase: 4.1.1
+  markdown-it: 12.2.0
+  markdown-it-anchor: 8.4.1_markdown-it@12.2.0
   node-sass: 6.0.1
   prism-svelte: 0.4.7
   prismjs: 1.25.0
@@ -1506,6 +1512,10 @@ packages:
       p-locate: 4.1.0
     dev: false
 
+  /lodash.kebabcase/4.1.1:
+    resolution: {integrity: sha1-hImxyw0p/4gZXM7KRI/21swpXDY=}
+    dev: false
+
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}
     dev: true
@@ -1548,6 +1558,15 @@ packages:
   /map-obj/4.3.0:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
+    dev: false
+
+  /markdown-it-anchor/8.4.1_markdown-it@12.2.0:
+    resolution: {integrity: sha512-sLODeRetZ/61KkKLJElaU3NuU2z7MhXf12Ml1WJMSdwpngeofneCRF+JBbat8HiSqhniOMuTemXMrsI7hA6XyA==}
+    peerDependencies:
+      '@types/markdown-it': '*'
+      markdown-it: '*'
+    dependencies:
+      markdown-it: 12.2.0
     dev: false
 
   /markdown-it/12.2.0:

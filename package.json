@@ -30,6 +30,9 @@
 	"type": "module",
 	"dependencies": {
 		"is-promise": "^4.0.0",
+		"lodash.kebabcase": "^4.1.1",
+		"markdown-it": "^12.2.0",
+		"markdown-it-anchor": "^8.4.1",
 		"node-sass": "^6.0.1",
 		"prism-svelte": "^0.4.7",
 		"prismjs": "^1.25.0",
