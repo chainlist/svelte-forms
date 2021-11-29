@@ -14,17 +14,26 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"autoprefixer": "^10.3.7",
+		"cssnano": "^5.0.8",
+		"postcss": "^8.3.9",
+		"postcss-load-config": "^3.1.0",
 		"prettier": "^2.4.1",
 		"prettier-plugin-svelte": "^2.4.0",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.2.6",
-		"svelte-preprocess": "^4.9.4",
+		"svelte-preprocess": "^4.9.8",
+		"tailwindcss": "^2.2.19",
 		"tslib": "^2.3.1",
 		"typescript": "^4.5.2"
 	},
 	"type": "module",
 	"dependencies": {
 		"is-promise": "^4.0.0",
-		"svelte2tsx": "^0.4.10"
+		"node-sass": "^6.0.1",
+		"prism-svelte": "^0.4.7",
+		"prismjs": "^1.25.0",
+		"svelte2tsx": "^0.4.10",
+		"vite-plugin-markdown": "^2.0.2"
 	}
 }

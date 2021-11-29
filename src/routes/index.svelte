@@ -1,53 +1,30 @@
 <script lang="ts">
-	import { field } from '$lib/field';
-	import { form } from '$lib/form';
-	import { email as emailValidator } from '$lib/validators/email';
-	import { min } from '$lib/validators/min';
-	import { required } from '$lib/validators/required';
+	import { browser } from '$app/env';
+	import { onMount } from 'svelte';
+	import 'prismjs/themes/prism.css';
 
-	function checkName() {
-		return async (value: string) => {
-			const users: any[] = await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
-				r.json()
-			);
+	import { html } from '../docs/Install.md';
 
-			return {
-				valid: !users.find((d) => d.name === value),
-				name: 'already_taken'
-			};
-		};
+	async function loadPrism() {
+		const Prism = await import('prismjs');
+		await import('prismjs/components/prism-bash');
+		await import('prismjs/components/prism-typescript');
+		await import('prismjs/plugins/toolbar/prism-toolbar');
+		await import('prismjs/plugins/normalize-whitespace/prism-normalize-whitespace');
+		await import('prism-svelte');
+		Prism.manual = true;
+
+		return Prism;
 	}
 
-	const name = field('name', '', [required(), min(3)]);
-	const email = field('email', '', [required(), emailValidator()]);
-	const myForm = form(name, email);
+	onMount(async () => {
+		if (browser) {
+			const Prism = await loadPrism();
+			Prism.highlightAll();
+		}
+	});
 </script>
 
-<h1>Svelte store test</h1>
-
-<div>{JSON.stringify($myForm)}</div>
-
-<button on:click={() => myForm.reset()}>Reset form</button>
-<button on:click={() => myForm.validate()}>Validate form</button>
-
-<br />
-
-<label for="name">
-	Name:
-	<input type="text" id="name" bind:value={$name.value} />
-
-	{#if $myForm.hasError('name.required')}
-		<div>Name is required</div>
-	{/if}
-
-	<pre>{JSON.stringify($name, null, 2)}</pre>
-</label>
-
-<label for="email">
-	Email:
-	<input type="email" id="email" bind:value={$email.value} />
-	{#if $myForm.hasError('email.required')}
-		<div>Email is required</div>
-	{/if}
-	<pre>{JSON.stringify($email, null, 2)}</pre>
-</label>
+<section class="px-20">
+	{@html html}
+</section>

@@ -1,6 +1,6 @@
 import type { FieldOptions } from './createFieldStore';
 import { createFieldStore } from './createFieldStore';
-import type { Validator, ValidatorFactory } from './validators/validator';
+import type { Validator } from './validators/validator';
 
 const defaultOptions: FieldOptions = {
 	valid: true,

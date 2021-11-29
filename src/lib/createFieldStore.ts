@@ -1,7 +1,7 @@
 import isPromise from 'is-promise';
 import type { Writable, Updater } from 'svelte/store';
 import { writable, get } from 'svelte/store';
-import type { Validator, ValidatorFactory } from './validators/validator';
+import type { Validator } from './validators/validator';
 
 export type FieldOptions = {
 	valid: boolean;
@@ -22,7 +22,7 @@ export type Field<T> = {
 export function createFieldStore<T>(
 	name: string,
 	v: T,
-	validators: ValidatorFactory<T>[] = [],
+	validators: Validator[] = [],
 	options: FieldOptions
 ): Writable<Field<T>> & { validate: () => void; reset: () => void } {
 	const value = {
