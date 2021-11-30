@@ -10,7 +10,6 @@
 		await import('prismjs/plugins/toolbar/prism-toolbar');
 		await import('prismjs/plugins/normalize-whitespace/prism-normalize-whitespace');
 		await import('prism-svelte');
-		Prism.manual = true;
 
 		return Prism;
 	}
@@ -27,7 +26,7 @@
 
 <section class="px-20 space-y-32">
 	<h1>svelte-forms documentation</h1>
-	{#each docs as asyncDoc, index}
+	{#each docs as asyncDoc}
 		{#await asyncDoc then doc}
 			<section class="space-y-7 relative group">
 				<a
@@ -42,7 +41,3 @@
 		{/await}
 	{/each}
 </section>
-
-<!-- <section class="px-20" id={installAttr.id}>
-	{@html installHtml}
-</section> -->

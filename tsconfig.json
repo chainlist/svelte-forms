@@ -26,7 +26,9 @@
 			"$lib": ["src/lib"],
 			"$lib/*": ["src/lib/*"],
 			"svelte-forms": ["src/lib"],
-			"svelte-forms/*": ["src/lib/*"]
+			"svelte-forms/*": ["src/lib/*"],
+			"svelte-forms/validators": ["src/lib/validators"],
+			"svelte-forms/validators/*": ["src/lib/validators/*"]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]

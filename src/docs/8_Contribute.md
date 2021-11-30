@@ -1,5 +1,5 @@
 ---
-filename: 6_Contribute.md
+filename: 8_Contribute.md
 ---
 
 ## How to contribute

@@ -9,8 +9,10 @@
 		import('../docs/2_Examples.md'),
 		import('../docs/3_Form.md'),
 		import('../docs/4_Field.md'),
-		import('../docs/5_Config.md'),
-		import('../docs/6_Contribute.md')
+		import('../docs/5_Validators.md'),
+		import('../docs/6_UseStyle.md'),
+		import('../docs/7_Migrating.md'),
+		import('../docs/8_Contribute.md')
 	];
 
 	setContext('docs', docs);
@@ -23,7 +25,7 @@
 			{#await asyncDoc then doc}
 				{#each doc.toc as toc}
 					<li class:main-link={toc.level == 2} class:sub-link={toc.level != 2}>
-						<a href="#{kebab(toc.content)}" rel="external">{toc.content}</a>
+						<a class="hover:underline" href="#{kebab(toc.content)}" rel="external">{toc.content}</a>
 					</li>
 				{/each}
 			{/await}

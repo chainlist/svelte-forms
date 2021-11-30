@@ -33,5 +33,9 @@ export function form(...fields: Writable<Field<any>>[]) {
 		fields.forEach((field: any) => field.validate());
 	}
 
-	return { subscribe, reset, validate };
+	function getField(name: string): Writable<Field<any>> {
+		return fields.find((f) => get(f).name === name);
+	}
+
+	return { subscribe, reset, validate, getField };
 }

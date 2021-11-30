@@ -12,7 +12,7 @@ const defaultOptions: FieldOptions = {
 export function field<T>(
 	name: string,
 	value: T,
-	validators: Validator[],
+	validators: Validator[] = [],
 	options: FieldOptions = defaultOptions
 ) {
 	return createFieldStore(name, value, validators, options);

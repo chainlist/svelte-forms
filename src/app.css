@@ -10,6 +10,7 @@
 
 	html,
 	body {
+		@apply text-gray-700;
 	}
 
 	#svelte {
@@ -27,8 +28,30 @@
 		font-variant: small-caps;
 	}
 
-	p code {
-		@apply py-1 px-2 text-red-400 shadow;
+	h3 {
+		@apply w-full pt-5 text-3xl text-gray-500 tracking-widest font-normal;
+	}
+
+	p code,
+	li code {
+		@apply py-1 px-2 text-red-500 shadow;
+	}
+
+	blockquote {
+		@apply bg-red-100 p-5 rounded-md text-gray-700;
+	}
+
+	section ul {
+		@apply pl-5;
+	}
+
+	section ul li:before {
+		content: '\279C';
+		@apply text-red-400 mr-3;
+	}
+
+	p a {
+		@apply text-red-700 hover:underline;
 	}
 }
 
