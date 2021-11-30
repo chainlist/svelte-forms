@@ -10,16 +10,15 @@
 
 		
 
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-b3de066c.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-b1bbe6fe.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-d7b215eb.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-379e1796.js">
 		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/preload-helper-cd5f4ade.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-be310358.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-4f62dacd.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-7245f58c.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-86338376.js">
 		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/pages/test/index.svelte-43fafacd.css">
 
 		<script type="module">
-			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-b3de066c.js";
+			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-d7b215eb.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"/svelte-forms","assets":"https://chainlist.github.io/svelte-forms"},
@@ -32,8 +31,8 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-be310358.js"),
-						import("https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-4f62dacd.js")
+						import("https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-7245f58c.js"),
+						import("https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-86338376.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -49,40 +48,12 @@
 		<div id="svelte">
 
 
-<h1>Svelte store test</h1>
+<section><input type="text" value="">
+	<input type="password" value="my_password">
 
-<div>{&quot;valid&quot;:true,&quot;dirty&quot;:false,&quot;errors&quot;:[]}</div>
-
-<button>Reset form</button>
-<button>Validate form</button>
-
-<br>
-
-<label for="name">Name:
-	<input type="text" id="name" class="svelte-pyfgoj" value="">
-	<button>validate</button>
-
-	
-
-	<pre>{
-  &quot;name&quot;: &quot;name&quot;,
-  &quot;value&quot;: &quot;&quot;,
-  &quot;valid&quot;: true,
-  &quot;dirty&quot;: false,
-  &quot;errors&quot;: []
-}</pre></label>
-
-<label for="email">Email:
-	<input type="email" id="email" class="svelte-pyfgoj" value="">
-	
-	<pre>{
-  &quot;name&quot;: &quot;email&quot;,
-  &quot;value&quot;: &quot;&quot;,
-  &quot;valid&quot;: true,
-  &quot;dirty&quot;: false,
-  &quot;errors&quot;: []
-}</pre>
-</label>
+	<button>Reset name</button>
+	<button>Reset password</button>
+	<button>Reset form</button></section>
 
 
 

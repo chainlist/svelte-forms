@@ -20,8 +20,8 @@ const t={filename:"2_Examples.md"},e=`<h2 id="some-examples" tabindex="-1">some 
   import { form, field } from 'svelte-forms';
   import { required } from 'svlete-forms/validators';
 
-  const name = field('name', [required()]);
-  const password = field('password', [required()]);
+  const name = field('name', '', [required()]);
+  const password = field('password', 'my_password', [required()]);
   const myForm = form(name, password);
 &lt;/script&gt;;
 
@@ -30,9 +30,9 @@ const t={filename:"2_Examples.md"},e=`<h2 id="some-examples" tabindex="-1">some 
   &lt;input type=&quot;text&quot; bind:value={$name.value} /&gt;
   &lt;input type=&quot;password&quot; bind:value={$password.value} /&gt;
 
-  &lt;button on:click={name.reset()}&gt;Reset name&lt;/button&gt;
-  &lt;button on:click={password.reset()}&gt;Reset password&lt;/button&gt;
-  &lt;button on:click={myForm.reset()}&gt;Reset form&lt;/button&gt;
+  &lt;button on:click={name.reset}&gt;Reset name&lt;/button&gt;
+  &lt;button on:click={password.reset}&gt;Reset password&lt;/button&gt;
+  &lt;button on:click={myForm.reset}&gt;Reset form&lt;/button&gt;
 &lt;/section&gt;
 </code></pre>
 `,n=[{level:"2",content:"some examples"},{level:"3",content:"Simple form with one input"},{level:"3",content:"Reset a form / field"}];export{t as attributes,e as html,n as toc};
