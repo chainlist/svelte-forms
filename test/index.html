@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<link rel="icon" href="/favicon.png" />
+		<!-- <link rel="stylesheet" href="/prism.css" /> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+
+		
+
+		<link rel="modulepreload" href="/_app/start-8e5d6406.js">
+		<link rel="modulepreload" href="/_app/chunks/vendor-b1bbe6fe.js">
+		<link rel="modulepreload" href="/_app/chunks/preload-helper-ec9aa979.js">
+		<link rel="modulepreload" href="/_app/pages/test/__layout.reset.svelte-be310358.js">
+		<link rel="modulepreload" href="/_app/pages/test/index.svelte-4f62dacd.js">
+		<link rel="stylesheet" href="/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/_app/assets/pages/test/index.svelte-43fafacd.css">
+
+		<script type="module">
+			import { start } from "/_app/start-8e5d6406.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":""},
+				session: {},
+				host: location.host,
+				route: true,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/_app/pages/test/__layout.reset.svelte-be310358.js"),
+						import("/_app/pages/test/index.svelte-4f62dacd.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "\u002Ftest",
+						query: new URLSearchParams(""),
+						params: {}
+					}
+				}
+			});
+		</script>
+	</head>
+	<body class="text-2xl">
+		<div id="svelte">
+
+
+<h1>Svelte store test</h1>
+
+<div>{&quot;valid&quot;:true,&quot;dirty&quot;:false,&quot;errors&quot;:[]}</div>
+
+<button>Reset form</button>
+<button>Validate form</button>
+
+<br>
+
+<label for="name">Name:
+	<input type="text" id="name" class="svelte-pyfgoj" value="">
+	<button>validate</button>
+
+	
+
+	<pre>{
+  &quot;name&quot;: &quot;name&quot;,
+  &quot;value&quot;: &quot;&quot;,
+  &quot;valid&quot;: true,
+  &quot;dirty&quot;: false,
+  &quot;errors&quot;: []
+}</pre></label>
+
+<label for="email">Email:
+	<input type="email" id="email" class="svelte-pyfgoj" value="">
+	
+	<pre>{
+  &quot;name&quot;: &quot;email&quot;,
+  &quot;value&quot;: &quot;&quot;,
+  &quot;valid&quot;: true,
+  &quot;dirty&quot;: false,
+  &quot;errors&quot;: []
+}</pre>
+</label>
+
+
+
+			
+		</div>
+	</body>
+</html>
