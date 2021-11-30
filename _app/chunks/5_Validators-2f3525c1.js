@@ -51,8 +51,8 @@ const name = field('name', [between(3, 10)]);
 const lastname = field('lastname', [min(3), max(10)]);
 </code></pre>
 <h3 id="custom-validator" tabindex="-1">custom validator</h3>
-<p>A validator is just a function that returns a function <code>(value: any) =&gt; { valid: boolean, name: 'name_of_the_validator' }</code>. Nothing else.
-Of course this validator can be asynchronus and return a promise.</p>
+<p>A validator is just a function that returns a function <code>(value: any) =&gt; { valid: boolean, name: 'name_of_the_validator' }</code>. Nothing else.</p>
+<p>Of course this validator can be asynchronus and return a promise.</p>
 <blockquote>
 <p>If your validators takes parameters, they need to be put on the main function and not the returned one</p>
 </blockquote>
