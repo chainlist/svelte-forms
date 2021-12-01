@@ -2,8 +2,8 @@ import type { Validator } from './validator';
 
 export function max(n: number): Validator {
 	return (value: any) => {
-		const val = isNaN(value) ? value.length : parseFloat(value);
+		const val = typeof value === 'string' ? value.length : isNaN(value) ? 0 : parseFloat(value);
 
-		return { valid: !isNaN(value) || val <= n, name: 'max' };
+		return { valid: val <= n, name: 'max' };
 	};
 }

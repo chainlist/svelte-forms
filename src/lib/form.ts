@@ -1,4 +1,4 @@
-import type { Writable } from 'svelte/store';
+import type { Readable, Writable } from 'svelte/store';
 import type { Field } from './createFieldStore';
 import { derived, get } from 'svelte/store';
 
@@ -8,7 +8,7 @@ export type Form = {
 	errors: string[];
 };
 
-export function form(...fields: Writable<Field<any>>[]) {
+export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[]) {
 	const store = derived(fields, (values) => ({
 		valid: values.every((value) => value.valid),
 		dirty: values.some((value) => value.dirty),

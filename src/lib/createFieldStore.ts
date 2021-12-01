@@ -1,7 +1,7 @@
 import isPromise from 'is-promise';
-import type { Writable, Updater } from 'svelte/store';
+import type { Writable, Updater, Readable } from 'svelte/store';
 import { writable, get } from 'svelte/store';
-import type { Validator } from './validators/validator';
+import type { FieldValidation, Validator } from './validators/validator';
 
 export type FieldOptions = {
 	valid: boolean;
@@ -13,11 +13,69 @@ export type FieldOptions = {
 export type Field<T> = {
 	name: string;
 	value: T;
-	oldValue?: T;
 	valid: boolean;
 	dirty: boolean;
 	errors: string[];
 };
+
+export type FieldsValues<T> = T extends Readable<infer U>
+	? U
+	: {
+			[K in keyof T]: T[K] extends Readable<infer U> ? U : never;
+	  };
+
+export type Fields =
+	| Readable<any>
+	| [Readable<any>, ...Array<Readable<any>>]
+	| Array<Readable<any>>;
+
+export function createFieldOject<T>(
+	name: string,
+	value: T,
+	errors: FieldValidation[] = []
+): Field<T> {
+	return processField({ name, value, valid: true, errors: [], dirty: false }, errors);
+}
+
+export async function validateValue<T>(
+	value: T,
+	validators: Validator[],
+	asyncSetter: (asyncValidator: FieldValidation) => void = null,
+	stopAtFirstError: boolean
+) {
+	let validations: FieldValidation[] = [];
+
+	for (const validator of validators) {
+		let result = validator(value);
+
+		if (isPromise(result)) {
+			result.then((r) => {
+				if (asyncSetter) asyncSetter(r);
+				else [...validations, r];
+			});
+			continue;
+		} else {
+			if (stopAtFirstError && !result.valid) {
+				validations = [result];
+				break;
+			}
+
+			validations = [...validations, result];
+		}
+	}
+
+	return validations;
+}
+
+export function processField<T>(field: Field<T>, validations?: FieldValidation[]) {
+	if (validations) {
+		const errors = validations.filter((v) => !v.valid).map((v) => v.name);
+		const valid = !errors.length;
+		return { ...field, dirty: true, valid, errors };
+	}
+
+	return field;
+}
 
 export function createFieldStore<T>(
 	name: string,
@@ -43,17 +101,7 @@ export function createFieldStore<T>(
 		});
 	}
 
-	function processField(field: Field<T>, validations?: Validator[]) {
-		if (validations) {
-			const errors = validations.filter((v) => !v.valid).map((v) => v.name);
-			const valid = !errors.length;
-			return { ...field, dirty: true, valid, errors };
-		}
-
-		return field;
-	}
-
-	async function setLater(this: void, asyncValidator: Promise<Validator>) {
+	async function setLater(asyncValidator: Promise<FieldValidation>) {
 		const result = await asyncValidator;
 		let field: Field<T> = get(store);
 
@@ -64,7 +112,7 @@ export function createFieldStore<T>(
 
 	function set(this: void, field: Field<T>, forceValidation: boolean = false) {
 		if (forceValidation || options.validateOnChange) {
-			let validations: Validator[] = [];
+			let validations: FieldValidation[] = [];
 
 			for (const validator of validators) {
 				const result = validator(field.value);

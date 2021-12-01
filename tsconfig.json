@@ -25,6 +25,8 @@
 		"paths": {
 			"$lib": ["src/lib"],
 			"$lib/*": ["src/lib/*"],
+			"$utils": ["src/utils"],
+			"$utils/*": ["src/utils/*"],
 			"svelte-forms": ["src/lib"],
 			"svelte-forms/*": ["src/lib/*"],
 			"svelte-forms/validators": ["src/lib/validators"],
