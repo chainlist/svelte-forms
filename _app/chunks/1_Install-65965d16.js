@@ -1,11 +1,11 @@
 const e={filename:"1_Install.md"},t=`<h2 id="getting-started" tabindex="-1">getting started</h2>
 <h3 id="install" tabindex="-1">install</h3>
 <p>To install <code>svelte-forms</code> do one of the following commands:</p>
-<pre><code class="language-bash">npm install svelte-forms@2.0
+<pre><code class="language-bash">npm install svelte-forms
 </code></pre>
-<pre><code class="language-bash">pnpm add svelte-forms@2.0
+<pre><code class="language-bash">pnpm add svelte-forms
 </code></pre>
-<pre><code class="language-bash">yarn add svelte-forms@2.0
+<pre><code class="language-bash">yarn add svelte-forms
 </code></pre>
 <h3 id="svelte-kit-sapper" tabindex="-1">svelte-kit / sapper</h3>
 <p><code>svelte-forms</code> V2 has been made with the help of <code>svelte-kit</code>.</p>
