@@ -30,7 +30,7 @@
 		{#await asyncDoc then doc}
 			<section class="space-y-7 relative group">
 				<a
-					href="https://github.com/chainlist/svelte-forms/edit/v2/src/docs/{doc.attributes
+					href="https://github.com/chainlist/svelte-forms/edit/master/src/docs/{doc.attributes
 						.filename}"
 					class="absolute top-5 right-5 text-gray-600 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200"
 				>

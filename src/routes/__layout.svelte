@@ -19,6 +19,10 @@
 	const cssBuffer = 'pl-0 pl-2 pl-4 pl-8';
 </script>
 
+<svelte:head>
+	<title>svelte-forms: Forms validation made easy</title>
+</svelte:head>
+
 <nav class="bg-gray-300 pt-32 pb-10 pl-10 fixed top-0 w-96 h-full overflow-auto">
 	<ul>
 		{#each docs as asyncDoc}
