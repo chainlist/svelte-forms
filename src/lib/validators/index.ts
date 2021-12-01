@@ -4,3 +4,4 @@ export * from './max';
 export * from './min';
 export * from './required';
 export * from './url';
+export * from './matchField';

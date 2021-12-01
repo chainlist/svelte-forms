@@ -1,17 +1,21 @@
 <script>
 	import { form, field } from 'svelte-forms';
-	import { required } from 'svelte-forms/validators';
+	import { required, matchField } from 'svelte-forms/validators';
 
-	const name = field('name', '', [required()]);
-	const password = field('password', 'my_password', [required()]);
-	const myForm = form(name, password);
+	const password = field('password', '', [required()]);
+	const confirmation = field('password_confirmation', '', [matchField(password)]);
+	const myForm = form(password, confirmation);
 </script>
 
 <section>
-	<input type="text" bind:value={$name.value} />
-	<input type="password" bind:value={$password.value} />
+	<input type="text" bind:value={$password.value} />
+	<input type="text" bind:value={$confirmation.value} />
 
-	<button on:click={name.reset}>Reset name</button>
-	<button on:click={password.reset}>Reset password</button>
+	{#if $myForm.hasError('password_confirmation.match_field')}
+		<p>Password don't match</p>
+	{/if}
+
+	<button on:click={password.reset}>Reset name</button>
+	<button on:click={confirmation.reset}>Reset password</button>
 	<button on:click={myForm.reset}>Reset form</button>
 </section>

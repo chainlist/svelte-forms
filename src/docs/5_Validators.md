@@ -85,6 +85,25 @@ const name = field('name', [between(3, 10)]);
 const lastname = field('lastname', [min(3), max(10)]);
 ```
 
+### matchField
+
+```typescript
+function matchField(store: Readable<Field<any>>) => { valid: boolean, name : 'match_field' };
+```
+
+```typescript
+import { form, field } from 'svelte-forms';
+import { matchField } from 'svelte-forms/validators';
+
+const password = field('password', '');
+const passwordConfirmation = field('passwordConfirmation', '', [matchField(password)]);
+const myForm = form(password, passwordConfirmation);
+
+if ($myForm.hasError('passwordConfirmation.match_field')) {
+	alert('password do not match');
+}
+```
+
 ### custom validator
 
 A validator is just a function that returns a function `(value: any) => { valid: boolean, name: 'name_of_the_validator' }`. Nothing else.
