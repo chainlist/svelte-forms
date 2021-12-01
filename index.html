@@ -10,17 +10,18 @@
 
 		
 
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-b2e99e4e.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-c81f9e33.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-dac822b0.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-e29703b0.js">
 		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/preload-helper-cd5f4ade.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/__layout.svelte-817cee8b.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/index.svelte-92e4c49b.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/__layout.svelte-c614a2f1.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/index.svelte-4b411247.js">
 		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/pages/__layout.svelte-5e11fc4b.css">
+		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/vendor-b00f1465.css">
+		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/pages/__layout.svelte-24df9ef0.css">
 		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/pages/index.svelte-a07f5dcd.css">
 
 		<script type="module">
-			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-b2e99e4e.js";
+			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-dac822b0.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"/svelte-forms","assets":"https://chainlist.github.io/svelte-forms"},
@@ -33,8 +34,8 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("https://chainlist.github.io/svelte-forms/_app/pages/__layout.svelte-817cee8b.js"),
-						import("https://chainlist.github.io/svelte-forms/_app/pages/index.svelte-92e4c49b.js")
+						import("https://chainlist.github.io/svelte-forms/_app/pages/__layout.svelte-c614a2f1.js"),
+						import("https://chainlist.github.io/svelte-forms/_app/pages/index.svelte-4b411247.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -46,13 +47,15 @@
 			});
 		</script>
 	</head>
-	<body class="text-2xl">
+	<body class="text-2xl relative">
 		<div id="svelte">
 
 
 
 
-<nav class="bg-gray-300 pt-32 pb-10 pl-10 fixed top-0 w-96 h-full overflow-auto"><ul></ul></nav>
+<button class="fixed bottom-5 p-4 left-2 rounded-md sm:hidden z-50 bg-white border-l-1 border-b-1 border-gray-200 text-black flex items-center border-t-0 border-r-0">✕</button>
+
+<nav class="pt-32 pb-20 pl-24 sm:pl-10 fixed top-4 left-2 bottom-5 sm:pb-10 right-2 border-1 sm:border-0 border-gray-200 bg-gray-100 rounded-xl sm:bg-gray-300 sm:sm:rounded-none sm:top-0 sm:left-0 sm:right-0 sm:w-96 sm:h-full overflow-auto z-40 origin-bottom-left"><ul></ul></nav>
 
 <div id="content" class="pl-0 pt-10 sm:pl-96 sm:pt-32 pb-24"><section class="px-10 smpx-20 space-y-32"><h1>svelte-forms documentation</h1>
 	</section></div>
