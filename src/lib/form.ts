@@ -9,19 +9,44 @@ export type Form = {
 };
 
 export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[]) {
-	const store = derived(fields, (values) => ({
-		valid: values.every((value) => value.valid),
-		dirty: values.some((value) => value.dirty),
-		errors: values
-			.map((value) => {
-				return value.errors.map((e) => `${value.name}.${e}`);
-			})
-			.flat(),
+	let names: string[] = [];
+	let doubles: string[] = [];
 
-		hasError(this: Form, name: string) {
-			return this.errors.findIndex((e) => e === name) !== -1;
+	fields.forEach((field) => {
+		const obj = get(field);
+		if (names.includes(obj.name)) {
+			doubles = doubles.includes(obj.name) ? doubles : [...doubles, obj.name];
+		} else {
+			names = [...names, obj.name];
 		}
-	}));
+	});
+
+	if (doubles.length) {
+		throw new Error(`Cannot have the fields with the same name: ${doubles.join(', ')}`);
+	}
+
+	const store = derived(fields, (values) => {
+		return {
+			valid: values.every((value) => value.valid),
+			dirty: values.some((value) => value.dirty),
+			errors: values
+				.map((value) => {
+					return value.errors.map((e) => {
+						if (e.includes('.')) {
+							return e;
+						}
+
+						return `${value.name}.${e}`;
+					});
+				})
+				.flat()
+				.filter((value, index, self) => self.indexOf(value) === index),
+
+			hasError(this: Form, name: string) {
+				return this.errors.findIndex((e) => e === name) !== -1;
+			}
+		};
+	});
 
 	const { subscribe } = store;
 
@@ -33,7 +58,7 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		fields.forEach((field: any) => field.validate());
 	}
 
-	function getField(name: string): Writable<Field<any>> {
+	function getField(name: string): Writable<Field<any>> | Readable<Field<any>> {
 		return fields.find((f) => get(f).name === name);
 	}
 

@@ -18,6 +18,8 @@
 	<input type="text" bind:value={$firstname.value} />
 	<input type="text" bind:value={$lastname.value} />
 
+	{JSON.stringify($fullname)}
+	<br />
 	{JSON.stringify($myForm)}
 
 	<h1>Welcome {$fullname.value}</h1>

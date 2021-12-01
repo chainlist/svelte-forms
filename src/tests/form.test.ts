@@ -25,4 +25,10 @@ describe('form()', () => {
 		expect(result.valid).toBe(false);
 		expect(result.hasError('name.required')).toBe(true);
 	});
+
+	it('should not be possible to add multiples field with the same name', () => {
+		const name = field('name', '', [required()]);
+
+		expect(() => form(name, name)).toThrowError();
+	});
 });
