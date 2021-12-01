@@ -32,10 +32,6 @@ const myForm(name);
 
 </code></pre>
 <h3 id="validators" tabindex="-1">validators</h3>
-<ul>
-<li>validators are now to be called directly, thus providing type safe auto-completion</li>
-<li>validators now return a function that return an object <code>{ valid: boolean, name: string = 'validator_name' }</code></li>
-</ul>
 <pre><code class="language-typescript">// V1
 function max(value: any, args: any[]) {
 	const maxValue = parseFloat(args[0]);

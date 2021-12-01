@@ -1,4 +1,4 @@
-const e={filename:"3_Form.md"},t=`<h2 id="form" tabindex="-1">Form</h2>
+const e={filename:"3_Form.md"},t=`<h2 id="form" tabindex="-1">form</h2>
 <pre><code class="language-typescript">function form(...fields: Writable&lt;Field&lt;any&gt;&gt;[]) =&gt; Readable&lt;{
   dirty: boolean;
   valid: boolean;
@@ -42,4 +42,4 @@ You will then need to use the <code>$</code> in front of your variable to access
   {/if}
 &lt;/section&gt;
 </code></pre>
-`,n=[{level:"2",content:"Form"},{level:"3",content:"functions"},{level:"3",content:"hasError"},{level:"3",content:"example"}];export{e as attributes,t as html,n as toc};
+`,n=[{level:"2",content:"form"},{level:"3",content:"functions"},{level:"3",content:"hasError"},{level:"3",content:"example"}];export{e as attributes,t as html,n as toc};
