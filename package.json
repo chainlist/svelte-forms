@@ -1,6 +1,6 @@
 {
 	"name": "svelte-forms",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build && touch build/.nojekyll",
@@ -43,5 +43,13 @@
 		"prismjs": "^1.25.0",
 		"svelte-awesome": "^2.4.2",
 		"ua-parser-js": "^1.0.2"
+	},
+	"homepage": "https://chainlist.github.io/svelte-forms/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/chainlist/svelte-forms.git"
+	},
+	"author": {
+		"name": "Kevin Guillouard"
 	}
 }

@@ -52,7 +52,7 @@
 
 {#if open}
 	<nav
-		class="pt-32 pb-20 pl-24 sm:pl-10 fixed top-4 left-2 bottom-5 sm:pb-10 right-2 border-1 sm:border-0 border-gray-200 bg-gray-100 rounded-xl sm:bg-gray-300 sm:sm:rounded-none sm:top-0 sm:left-0 sm:right-0 sm:w-96 sm:h-full overflow-auto z-40 origin-bottom-left"
+		class="pt-32 pb-20 pl-24 sm:pl-10 fixed top-4 left-2 bottom-5 sm:pb-10 right-2 border-1 sm:border-0 border-gray-200 bg-white rounded-xl sm:bg-gray-300 sm:sm:rounded-none sm:top-0 sm:left-0 sm:right-0 sm:w-96 sm:h-full overflow-auto z-40 origin-bottom-left"
 		in:scale={{ duration: 300 }}
 		out:scale={{ duration: 300 }}
 		on:click={toggle}
