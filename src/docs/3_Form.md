@@ -2,7 +2,7 @@
 filename: 3_Form.md
 ---
 
-## Form
+## form
 
 ```typescript
 function form(...fields: Writable<Field<any>>[]) => Readable<{

@@ -4,6 +4,11 @@ filename: 5_Validators.md
 
 ## Validators
 
+- validators now need to be called directly, thus providing type safe auto-completion
+- validators now return a function that return an object `{ valid: boolean, name: string = 'validator_name' }`
+
+Check [custom validators](#custom-validator) for more info
+
 ### required
 
 ```typescript
@@ -54,6 +59,9 @@ import { field } from 'svelte-forms';
 import { min } from 'svelte-forms/validators';
 
 const name = field('name', [min(3)]);
+
+// also works with numerical value
+const age = field('age', 0, [min(18)]);
 ```
 
 ### max
@@ -67,6 +75,9 @@ import { field } from 'svelte-forms';
 import { max } from 'svelte-forms/validators';
 
 const name = field('name', [max(10)]);
+
+// also works with numerical value
+const age = field('age', 0, [max(18)]);
 ```
 
 ### between
@@ -79,10 +90,13 @@ function between(n: number) => { valid: boolean, name : 'between' };
 import { field } from 'svelte-forms';
 import { between } from 'svelte-forms/validators';
 
-const name = field('name', [between(3, 10)]);
+const name = field('name', '', [between(3, 10)]);
 
 // equivalent to
-const lastname = field('lastname', [min(3), max(10)]);
+const name = field('name', '', [min(3), max(10)]);
+
+// also works with numerical value
+const age = field('age', 0, [between(0, 18)]);
 ```
 
 ### matchField
@@ -101,6 +115,29 @@ const myForm = form(password, passwordConfirmation);
 
 if ($myForm.hasError('passwordConfirmation.match_field')) {
 	alert('password do not match');
+}
+```
+
+### not
+
+Special validator to inverse the result of the passed validator.
+
+- The returned name will be the name of the passed validator as well, see the next example
+
+```typescript
+function not(validator: Validator) => { valid: boolean, name : validation.name };
+```
+
+```typescript
+import { form, field } from 'svelte-forms';
+import { not, between } from 'svelte-forms/validators';
+
+const age = field('age', 0, [not(between(0, 17))]);
+
+const myForm = form(age);
+
+if ($myForm.hasError('age.between')) {
+	alert('you should not be between 0 and 18 to access this website');
 }
 ```
 

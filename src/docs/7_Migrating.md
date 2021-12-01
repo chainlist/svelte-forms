@@ -43,9 +43,6 @@ const myForm(name);
 
 ### validators
 
-- validators are now to be called directly, thus providing type safe auto-completion
-- validators now return a function that return an object `{ valid: boolean, name: string = 'validator_name' }`
-
 ```typescript
 // V1
 function max(value: any, args: any[]) {

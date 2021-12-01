@@ -57,12 +57,16 @@
 
 @layer components {
 	.main-link {
-		@apply text-gray-700;
+		@apply text-gray-700 text-3xl;
 		font-variant: small-caps;
 	}
 
+	.main-link:not(:first-child) {
+		@apply mt-10;
+	}
+
 	.sub-link {
-		@apply text-gray-500;
+		@apply text-gray-500 text-2xl;
 		@apply pl-5;
 	}
 }

@@ -5,3 +5,4 @@ export * from './min';
 export * from './required';
 export * from './url';
 export * from './matchField';
+export * from './not';
