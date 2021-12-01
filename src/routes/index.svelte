@@ -24,7 +24,7 @@
 	const docs = getContext('docs') as Promise<any>[];
 </script>
 
-<section class="px-20 space-y-32">
+<section class="px-10 smpx-20 space-y-32">
 	<h1>svelte-forms documentation</h1>
 	{#each docs as asyncDoc}
 		{#await asyncDoc then doc}
@@ -32,7 +32,7 @@
 				<a
 					href="https://github.com/chainlist/svelte-forms/edit/master/src/docs/{doc.attributes
 						.filename}"
-					class="absolute top-5 right-5 text-gray-600 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+					class="absolute top-1 right-1 sm:top-5 sm:right-5 text-gray-600 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200"
 				>
 					edit documentation
 				</a>

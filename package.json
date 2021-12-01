@@ -1,6 +1,6 @@
 {
 	"name": "svelte-forms",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build && touch build/.nojekyll",
@@ -11,7 +11,7 @@
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
 		"deploy": "pnpm run build && npx gh-pages -d build -t true",
-		"publish": "pnpm run package && cd package && npm publish"
+		"publish": "pnpm run package && node clean-package.js && cd package && npm publish"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
@@ -19,27 +19,29 @@
 		"@sveltejs/kit": "next",
 		"autoprefixer": "^10.3.7",
 		"cssnano": "^5.0.8",
-		"postcss": "^8.3.9",
+		"markdown-it-anchor": "^8.4.1",
+		"markdown-it": "^12.2.0",
+		"node-sass": "^6.0.1",
 		"postcss-load-config": "^3.1.0",
-		"prettier": "^2.4.1",
+		"postcss": "^8.3.9",
 		"prettier-plugin-svelte": "^2.4.0",
-		"svelte": "^3.44.0",
+		"prettier": "^2.4.1",
 		"svelte-check": "^2.2.6",
 		"svelte-preprocess": "^4.9.8",
+		"svelte": "^3.44.0",
+		"svelte2tsx": "^0.4.10",
 		"tailwindcss": "^2.2.19",
 		"tslib": "^2.3.1",
-		"typescript": "^4.5.2"
+		"typescript": "^4.5.2",
+		"vite-plugin-markdown": "^2.0.2"
 	},
 	"type": "module",
 	"dependencies": {
 		"is-promise": "^4.0.0",
 		"lodash.kebabcase": "^4.1.1",
-		"markdown-it": "^12.2.0",
-		"markdown-it-anchor": "^8.4.1",
-		"node-sass": "^6.0.1",
 		"prism-svelte": "^0.4.7",
 		"prismjs": "^1.25.0",
-		"svelte2tsx": "^0.4.10",
-		"vite-plugin-markdown": "^2.0.2"
+		"svelte-awesome": "^2.4.2",
+		"ua-parser-js": "^1.0.2"
 	}
 }
