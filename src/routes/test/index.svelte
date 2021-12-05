@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { form, field, combined } from 'svelte-forms';
-	import { required, matchField, not, between, min, max } from 'svelte-forms/validators';
+	import { required } from 'svelte-forms/validators';
 
 	function name() {
 		return async (value: string) => {
