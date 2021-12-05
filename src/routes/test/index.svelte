@@ -15,12 +15,7 @@
 
 	const firstname = field('firstname', '', [required(), name()]);
 	const lastname = field('lastname', '', [required()]);
-	const fullname = combined(
-		'fullname',
-		[firstname, lastname],
-		([f, l]) => f.value + ' ' + l.value,
-		[max(10)]
-	);
+	const fullname = combined('fullname', [firstname, lastname], ([f, l]) => f.value + ' ' + l.value);
 
 	const myForm = form(firstname, lastname, fullname);
 </script>

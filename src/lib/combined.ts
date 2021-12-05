@@ -2,7 +2,7 @@ import type { Validator } from './validators/validator';
 import type { Readable } from 'svelte/store';
 import { derived } from 'svelte/store';
 import type { Field, FieldOptions, FieldsValues } from './types';
-import { createFieldOject, validateValue } from './createFieldStore';
+import { createFieldOject, getErrors, validateValue } from './createFieldStore';
 import { defaultFieldOptions } from './types';
 
 export function combined<S extends Readable<Field<any>>[], T>(
@@ -33,8 +33,13 @@ export function combined<S extends Readable<Field<any>>[], T>(
 		};
 
 		if (values.some((v) => v.dirty)) {
-			const validations = createValidations();
-			set({ ...createFieldOject(name, value, validations), dirty: true });
+			getErrors(value, validators, options.stopAtFirstError).then((combinedValidations) => {
+				const validations = createValidations();
+				set({
+					...createFieldOject(name, value, [...combinedValidations, ...validations]),
+					dirty: true
+				});
+			});
 		} else {
 			set({ ...createFieldOject(name, value), dirty: false });
 		}
