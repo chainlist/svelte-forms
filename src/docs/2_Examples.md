@@ -9,7 +9,7 @@ filename: 2_Examples.md
 ```svelte
 <script>
   import { form, field } from 'svelte-forms';
-  import { required } from 'svlete-forms/validators';
+  import { required } from 'svelte-forms/validators';
 
   const name = field('name', [required()]);
   const myForm = form(name);
@@ -28,7 +28,7 @@ filename: 2_Examples.md
 ```svelte
 <script>
   import { form, field } from 'svelte-forms';
-  import { required } from 'svlete-forms/validators';
+  import { required } from 'svelte-forms/validators';
 
   const name = field('name', '', [required()]);
   const password = field('password', 'my_password', [required()]);
