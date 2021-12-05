@@ -14,11 +14,11 @@ describe('form()', () => {
 		expect(result.valid).toBe(true);
 	});
 
-	it('should not be valid', () => {
+	it('should not be valid', async () => {
 		const name = field('name', '', [required()]);
 		const myForm = form(name);
 
-		myForm.validate();
+		await myForm.validate();
 
 		const result = get(myForm);
 

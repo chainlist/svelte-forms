@@ -23,9 +23,9 @@ describe('field()', () => {
 			expect(result.errors).not.toContain('required');
 		});
 
-		it('should not be valid', () => {
+		it('should not be valid', async () => {
 			const name = field('name', '', [required()]);
-			name.validate();
+			await name.validate();
 
 			const result = get(name);
 
@@ -46,9 +46,9 @@ describe('field()', () => {
 			expect(result.errors).not.toContain('min');
 		});
 
-		it('should not be valid with one failed validator', () => {
+		it('should not be valid with one failed validator', async () => {
 			const name = field('name', 'no', [required(), min(3)]);
-			name.validate();
+			await name.validate();
 
 			const result = get(name);
 
@@ -57,9 +57,9 @@ describe('field()', () => {
 			expect(result.errors).toContain('min');
 		});
 
-		it('should not be valid with two failed validators', () => {
+		it('should not be valid with two failed validators', async () => {
 			const name = field('name', '', [required(), min(3)]);
-			name.validate();
+			await name.validate();
 
 			const result = get(name);
 

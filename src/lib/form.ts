@@ -54,8 +54,10 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		fields.forEach((field: any) => field.reset());
 	}
 
-	function validate() {
-		fields.forEach((field: any) => field.validate());
+	async function validate() {
+		for (const field of fields) {
+			await (field as any).validate();
+		}
 	}
 
 	function getField(name: string): Writable<Field<any>> | Readable<Field<any>> {

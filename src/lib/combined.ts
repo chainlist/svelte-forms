@@ -15,17 +15,26 @@ export function combined<S extends Readable<Field<any>>[], T>(
 	return derived(fields, (values, set) => {
 		const value = reducer(values);
 
-		const mergeValues = (f: Field<T>) => {
-			const valuesErrors = values.flatMap((v) => v.errors.map((e) => `${v.name}.${e}`).flat());
-			const valid = values.every((v) => v.valid);
+		const createValidations = () => {
+			let errors = [];
 
-			return { ...f, valid: f.valid && valid, errors: [...valuesErrors, ...f.errors] };
+			values.forEach((value) => {
+				errors = [
+					...errors,
+					...value.errors
+						.map((e) => {
+							return { valid: false, name: `${value.name}.${e}` };
+						})
+						.flat()
+				];
+			});
+
+			return errors;
 		};
 
 		if (values.some((v) => v.dirty)) {
-			const errors = validateValue(value, validators, null, options.stopAtFirstError);
-
-			errors.then((err) => set(mergeValues(createFieldOject(name, value, err))));
+			const validations = createValidations();
+			set({ ...createFieldOject(name, value, validations), dirty: true });
 		} else {
 			set({ ...createFieldOject(name, value), dirty: false });
 		}

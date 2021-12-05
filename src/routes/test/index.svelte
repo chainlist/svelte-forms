@@ -1,8 +1,19 @@
-<script>
+<script lang="ts">
 	import { form, field, combined } from 'svelte-forms';
 	import { required, matchField, not, between, min, max } from 'svelte-forms/validators';
 
-	const firstname = field('firstname', '');
+	function name() {
+		return async (value: string) => {
+			const users = (await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
+				r.json()
+			)) as any[];
+			const exists = (v: string) => !!users.find((u) => u.username === value);
+
+			return { valid: !exists(value), name: 'check_name' };
+		};
+	}
+
+	const firstname = field('firstname', '', [required(), name()]);
 	const lastname = field('lastname', '', [required()]);
 	const fullname = combined(
 		'fullname',
@@ -18,9 +29,12 @@
 	<input type="text" bind:value={$firstname.value} />
 	<input type="text" bind:value={$lastname.value} />
 
-	{JSON.stringify($fullname)}
-	<br />
-	{JSON.stringify($myForm)}
+	<div class="flex flex-col gap-4">
+		<span>{JSON.stringify($firstname)}</span>
+		<span>{JSON.stringify($lastname)}</span>
+		<span>{JSON.stringify($fullname)}</span>
+		<span>{JSON.stringify($myForm)}</span>
+	</div>
 
 	<h1>Welcome {$fullname.value}</h1>
 
