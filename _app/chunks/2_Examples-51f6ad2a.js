@@ -2,7 +2,7 @@ const t={filename:"2_Examples.md"},e=`<h2 id="some-examples" tabindex="-1">some 
 <h3 id="simple-form-with-one-input" tabindex="-1">Simple form with one input</h3>
 <pre><code class="language-svelte">&lt;script&gt;
   import { form, field } from 'svelte-forms';
-  import { required } from 'svlete-forms/validators';
+  import { required } from 'svelte-forms/validators';
 
   const name = field('name', [required()]);
   const myForm = form(name);
@@ -18,7 +18,7 @@ const t={filename:"2_Examples.md"},e=`<h2 id="some-examples" tabindex="-1">some 
 <h3 id="reset-a-form-field" tabindex="-1">Reset a form / field</h3>
 <pre><code class="language-svelte">&lt;script&gt;
   import { form, field } from 'svelte-forms';
-  import { required } from 'svlete-forms/validators';
+  import { required } from 'svelte-forms/validators';
 
   const name = field('name', '', [required()]);
   const password = field('password', 'my_password', [required()]);
