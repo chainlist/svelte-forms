@@ -1,13 +1,7 @@
-import type { FieldOptions } from './createFieldStore';
 import { createFieldStore } from './createFieldStore';
+import type { FieldOptions } from './types';
+import { defaultFieldOptions } from './types';
 import type { Validator } from './validators/validator';
-
-export const defaultFieldOptions: FieldOptions = {
-	valid: true,
-	checkOnInit: false,
-	validateOnChange: true,
-	stopAtFirstError: false
-};
 
 export function field<T>(
 	name: string,

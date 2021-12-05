@@ -1,40 +1,18 @@
 import isPromise from 'is-promise';
 import type { Writable, Updater, Readable } from 'svelte/store';
 import { writable, get } from 'svelte/store';
+import type { Field, FieldOptions } from './types';
 import type { FieldValidation, Validator } from './validators/validator';
-
-export type FieldOptions = {
-	valid: boolean;
-	checkOnInit: boolean;
-	validateOnChange: boolean;
-	stopAtFirstError: boolean;
-};
-
-export type Field<T> = {
-	name: string;
-	value: T;
-	valid: boolean;
-	dirty: boolean;
-	errors: string[];
-};
-
-export type FieldsValues<T> = T extends Readable<infer U>
-	? U
-	: {
-			[K in keyof T]: T[K] extends Readable<infer U> ? U : never;
-	  };
-
-export type Fields =
-	| Readable<any>
-	| [Readable<any>, ...Array<Readable<any>>]
-	| Array<Readable<any>>;
 
 export function createFieldOject<T>(
 	name: string,
 	value: T,
 	errors: FieldValidation[] = []
 ): Field<T> {
-	return processField({ name, value, valid: true, errors: [], dirty: false }, errors);
+	return processField(
+		{ name, value, valid: true, invalid: false, errors: [], dirty: false },
+		errors
+	);
 }
 
 export async function validateValue<T>(
@@ -86,7 +64,8 @@ export function createFieldStore<T>(
 	const value = {
 		name,
 		value: v,
-		valid: true,
+		valid: options.valid,
+		invalid: !options.valid,
 		dirty: false,
 		errors: []
 	};
@@ -147,6 +126,7 @@ export function createFieldStore<T>(
 				errors: [],
 				name,
 				valid: options.valid,
+				invalid: !options.valid,
 				value: v
 			})
 		);

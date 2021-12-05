@@ -1,4 +1,4 @@
-import type { Field } from '$lib/createFieldStore';
+import type { Field } from '$lib/types';
 import type { Readable } from 'svelte/store';
 import { get } from 'svelte/store';
 

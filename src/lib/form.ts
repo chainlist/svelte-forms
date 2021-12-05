@@ -1,6 +1,6 @@
 import type { Readable, Writable } from 'svelte/store';
-import type { Field } from './createFieldStore';
 import { derived, get } from 'svelte/store';
+import type { Field } from './types';
 
 export type Form = {
 	valid: boolean;
