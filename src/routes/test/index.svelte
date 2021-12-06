@@ -15,7 +15,9 @@
 
 	const firstname = field('firstname', '', [required(), name()]);
 	const lastname = field('lastname', '', [required()]);
-	const fullname = combined('fullname', [firstname, lastname], ([f, l]) => f.value + ' ' + l.value);
+	const fullname = combined('fullname', [firstname, lastname], ([f, l]) =>
+		[f.value, l.value].join(' ')
+	);
 
 	const myForm = form(firstname, lastname, fullname);
 </script>
@@ -34,9 +36,12 @@
 	<h1>Welcome {$fullname.value}</h1>
 
 	<br />
-	<button on:click={firstname.reset}>Reset name</button>
-	<button on:click={lastname.reset}>Reset password</button>
-	<button on:click={myForm.reset}>Reset form</button>
+	<div class="space-x-3">
+		<button on:click={firstname.reset}>Reset name</button>
+		<button on:click={lastname.reset}>Reset password</button>
+		<button on:click={myForm.reset}>Reset form</button>
+		<button on:click={myForm.validate}>Validate form</button>
+	</div>
 </section>
 
 <style>

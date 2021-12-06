@@ -9,20 +9,18 @@ export function createFieldOject<T>(
 	name: string,
 	value: T,
 	errors: FieldValidation[] = [],
-	options: FieldOptions = defaultFieldOptions
+	partialField: Partial<Field<T>> = {}
 ): Field<T> {
-	const field: Field<T> = { name, value, valid: true, invalid: false, errors: [], dirty: false };
+	const field: Field<T> = {
+		name,
+		value,
+		valid: true,
+		invalid: false,
+		errors: [],
+		dirty: false
+	};
 
-	Object.defineProperty(field, 'config', {
-		value: options,
-		enumerable: false
-	});
-
-	return processField(field, errors);
-}
-
-export function validate<T>(store: Readable<Field<T>>, validators: Validator[]) {
-	const validationsErrors = getErrors(store, validators);
+	return processField(field, errors, partialField);
 }
 
 export function getValue<T>(value: T | Field<T> | Readable<Field<T>>): T {
@@ -69,36 +67,16 @@ export async function getErrors<T>(
 	return errors;
 }
 
-export async function validateValue<T>(
-	value: T,
-	validators: Validator[],
-	stopAtFirstError: boolean
+export function processField<T>(
+	field: Field<T>,
+	validations?: FieldValidation[],
+	partialField: Partial<Field<T>> = {}
 ) {
-	let validations: FieldValidation[] = [];
-
-	for (const validator of validators) {
-		let result = validator(value);
-
-		if (isPromise(result)) {
-			result = await result;
-		}
-
-		if (stopAtFirstError && !result.valid) {
-			validations = [result];
-			break;
-		}
-
-		validations = [...validations, result];
-	}
-
-	return validations;
-}
-
-export function processField<T>(field: Field<T>, validations?: FieldValidation[]) {
 	if (validations) {
 		const errors = validations.filter((v) => !v.valid).map((v) => v.name);
 		const valid = !errors.length;
-		return { ...field, dirty: true, valid, invalid: !valid, errors };
+		return { ...field, valid, invalid: !valid, errors, ...partialField };
+		// return { ...field, dirty: field.dirty || !!validations.length, valid, invalid: !valid, errors, ...partialField };
 	}
 
 	return field;
@@ -119,36 +97,25 @@ export function createFieldStore<T>(
 		errors: []
 	};
 	const store = writable<Field<T>>(value);
-	const { subscribe, update: _update, set: _set } = store;
-
-	function update(this: void, updater: Updater<Field<T>>): void {
-		_update(updater);
-		_update((data) => {
-			data.dirty = true;
-			return data;
-		});
-	}
-
-	async function setLater(asyncValidator: Promise<FieldValidation>) {
-		const result = await asyncValidator;
-		let field: Field<T> = get(store);
-
-		if (!result.valid) {
-			_set({ ...field, valid: false, errors: [...field.errors, result.name] });
-		}
-	}
+	const { subscribe, update, set: _set } = store;
 
 	async function set(this: void, field: Field<T>, forceValidation: boolean = false) {
 		if (forceValidation || options.validateOnChange) {
 			let validations = await getErrors(field, validators, options.stopAtFirstError);
-			_set(processField(field, validations));
+			_set(processField(field, validations, { dirty: true }));
 		} else {
-			_set(processField(field));
+			_set(processField(field, [], { dirty: true }));
 		}
 	}
 
 	async function validate() {
-		return set(get(store), true);
+		const errors = await getErrors(store, validators, options.stopAtFirstError);
+
+		update((field) => {
+			return processField(field, errors, { dirty: false });
+		});
+
+		// return set(get(store), true);
 	}
 
 	function reset() {

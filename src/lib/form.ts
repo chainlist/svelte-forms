@@ -51,12 +51,12 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 	const { subscribe } = store;
 
 	function reset() {
-		fields.forEach((field: any) => field.reset());
+		fields.forEach((field: any) => field.reset && field.reset());
 	}
 
 	async function validate() {
 		for (const field of fields) {
-			await (field as any).validate();
+			if ((field as any).validate) await (field as any).validate();
 		}
 	}
 

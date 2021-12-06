@@ -1,8 +1,9 @@
 import type { Validator } from './validators/validator';
 import type { Readable } from 'svelte/store';
+import { get } from 'svelte/store';
 import { derived } from 'svelte/store';
 import type { Field, FieldOptions, FieldsValues } from './types';
-import { createFieldOject, getErrors, validateValue } from './createFieldStore';
+import { createFieldOject, getErrors } from './createFieldStore';
 import { defaultFieldOptions } from './types';
 
 export function combined<S extends Readable<Field<any>>[], T>(
@@ -12,36 +13,40 @@ export function combined<S extends Readable<Field<any>>[], T>(
 	validators: Validator[] = [],
 	options: FieldOptions = defaultFieldOptions
 ): Readable<Field<T>> {
-	return derived(fields, (values, set) => {
-		const value = reducer(values);
+	const { subscribe } = derived<S, Field<T>>(
+		fields,
+		(values, set) => {
+			const value = reducer(values);
 
-		const createValidations = () => {
-			let errors = [];
+			const createValidations = () => {
+				let errors = [];
 
-			values.forEach((value) => {
-				errors = [
-					...errors,
-					...value.errors
-						.map((e) => {
-							return { valid: false, name: `${value.name}.${e}` };
-						})
-						.flat()
-				];
-			});
+				values.forEach((value) => {
+					errors = [
+						...errors,
+						...value.errors
+							.map((e) => {
+								return { valid: false, name: `${value.name}.${e}` };
+							})
+							.flat()
+					];
+				});
 
-			return errors;
-		};
+				return errors;
+			};
 
-		if (values.some((v) => v.dirty)) {
 			getErrors(value, validators, options.stopAtFirstError).then((combinedValidations) => {
 				const validations = createValidations();
-				set({
-					...createFieldOject(name, value, [...combinedValidations, ...validations]),
-					dirty: true
-				});
+
+				set(
+					createFieldOject(name, value, [...combinedValidations, ...validations], {
+						dirty: values.some((v) => v.dirty)
+					})
+				);
 			});
-		} else {
-			set({ ...createFieldOject(name, value), dirty: false });
-		}
-	});
+		},
+		createFieldOject(name, reducer(fields.map((f) => get(f)) as any), [])
+	);
+
+	return { subscribe };
 }
