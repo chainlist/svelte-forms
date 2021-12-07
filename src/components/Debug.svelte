@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Field } from '$lib/createFieldStore';
+	import type { Field } from '$lib/types';
+
 	import type { Readable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
 
@@ -21,9 +22,8 @@
 		class="p-2 inline-block rounded-lg transition-colors duration-200 border-2 border-dashed border-transparent"
 		class:bg-green-200={$field.valid}
 		class:bg-red-200={$field.invalid}
-		class:bg-yellow-200={$field.pending}
-		class:border-red-500={$field.dirty}
 	>
+		{$field.dirty ? '[Dirty]' : ''}
 		{$field.name ?? 'form'}<span>{$field.errors.length ? `(${$field.errors.length})` : ''}</span>
 	</span>
 

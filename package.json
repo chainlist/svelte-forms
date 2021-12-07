@@ -28,6 +28,7 @@
 		"cssnano": "^5.0.8",
 		"jest": "^27.4.3",
 		"jest-in-case": "^1.0.2",
+		"jest-mock-promise": "^1.1.10",
 		"markdown-it": "^12.2.0",
 		"markdown-it-anchor": "^8.4.1",
 		"node-sass": "^6.0.1",

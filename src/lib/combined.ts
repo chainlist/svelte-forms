@@ -12,7 +12,8 @@ export function combined<S extends Readable<Field<any>>[], T>(
 	reducer: (fields: FieldsValues<S>) => T,
 	validators: Validator[] = [],
 	options: FieldOptions = defaultFieldOptions
-): Readable<Field<T>> {
+): Readable<Field<T>> & { validate: () => Promise<Field<T>> } {
+	let resolve: Promise<Field<T>>;
 	const { subscribe } = derived<S, Field<T>>(
 		fields,
 		(values, set) => {
@@ -35,18 +36,36 @@ export function combined<S extends Readable<Field<any>>[], T>(
 				return errors;
 			};
 
-			getErrors(value, validators, options.stopAtFirstError).then((combinedValidations) => {
-				const validations = createValidations();
+			const validations = createValidations();
 
-				set(
-					createFieldOject(name, value, [...combinedValidations, ...validations], {
+			resolve = getErrors(value, validators, options.stopAtFirstError).then(
+				(combinedValidations) => {
+					const obj = createFieldOject(name, value, [...combinedValidations, ...validations], {
 						dirty: values.some((v) => v.dirty)
-					})
-				);
-			});
+					});
+
+					set(obj);
+					console.log(obj);
+					return obj;
+				}
+			);
+			set(
+				createFieldOject(name, value, validations, {
+					dirty: values.some((v) => v.dirty)
+				})
+			);
 		},
 		createFieldOject(name, reducer(fields.map((f) => get(f)) as any), [])
 	);
 
-	return { subscribe };
+	return {
+		subscribe,
+		validate: async () => {
+			for (const field of fields) {
+				console.log(await (field as any).validate());
+			}
+
+			return resolve;
+		}
+	};
 }

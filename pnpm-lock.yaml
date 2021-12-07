@@ -13,6 +13,7 @@ specifiers:
   is-promise: ^4.0.0
   jest: ^27.4.3
   jest-in-case: ^1.0.2
+  jest-mock-promise: ^1.1.10
   lodash.kebabcase: ^4.1.1
   markdown-it: ^12.2.0
   markdown-it-anchor: ^8.4.1
@@ -56,6 +57,7 @@ devDependencies:
   cssnano: 5.0.12_postcss@8.4.4
   jest: 27.4.3
   jest-in-case: 1.0.2
+  jest-mock-promise: 1.1.10
   markdown-it: 12.2.0
   markdown-it-anchor: 8.4.1_markdown-it@12.2.0
   node-sass: 6.0.1
@@ -1565,7 +1567,7 @@ packages:
     peerDependencies:
       svelte: ^3.44.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.30_svelte@3.44.2+vite@2.6.14
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.31_svelte@3.44.2+vite@2.6.14
       cheap-watch: 1.0.4
       sade: 1.7.4
       svelte: 3.44.2
@@ -1578,8 +1580,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.30_svelte@3.44.2+vite@2.6.14:
-    resolution: {integrity: sha512-YQqdMxjL1VgSFk4/+IY3yLwuRRapPafPiZTiaGEq1psbJYSNYUWx9F1zMm32GMsnogg3zn99mGJOqe3ld3HZSg==}
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.31_svelte@3.44.2+vite@2.6.14:
+    resolution: {integrity: sha512-8K3DcGP1V+XBv389u32S6wt8xiun6hHd5wn28AKLSoNTIhOmJOA2RJUJzp0seTRI86Shme4lzHI2Fgq4qz1wXQ==}
     engines: {node: ^14.13.1 || >= 16}
     peerDependencies:
       diff-match-patch: ^1.0.5
@@ -3860,6 +3862,10 @@ packages:
       pretty-format: 27.4.2
       slash: 3.0.0
       stack-utils: 2.0.5
+    dev: true
+
+  /jest-mock-promise/1.1.10:
+    resolution: {integrity: sha512-3TiZuTliAlF8xDeSbJGdCz+qCz2fQ1NH71Xw3meX9LC84D19dtMlG9Y1HNYQPk1FMji35SOMiwMZYR12NaKVpQ==}
     dev: true
 
   /jest-mock/27.4.2:

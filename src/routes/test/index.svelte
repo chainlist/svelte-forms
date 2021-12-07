@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Debug from '$components/Debug.svelte';
+
 	import { form, field, combined } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
 
@@ -13,10 +15,19 @@
 		};
 	}
 
-	const firstname = field('firstname', '', [required(), name()]);
-	const lastname = field('lastname', '', [required()]);
-	const fullname = combined('fullname', [firstname, lastname], ([f, l]) =>
-		[f.value, l.value].join(' ')
+	const newMax = (n: string) => {
+		return (v: string) => {
+			return { valid: v !== n, name: 'newMax' };
+		};
+	};
+
+	const firstname = field('firstname', 'kevin', [required(), name()]);
+	const lastname = field('lastname', 'guillouard', [required()]);
+	const fullname = combined(
+		'fullname',
+		[firstname, lastname],
+		([f, l]) => [f.value, l.value].join(' '),
+		[newMax('kevin guillouard')]
 	);
 
 	const myForm = form(firstname, lastname, fullname);
@@ -27,10 +38,9 @@
 	<input type="text" bind:value={$lastname.value} />
 
 	<div class="flex flex-col gap-4">
-		<span>{JSON.stringify($firstname)}</span>
-		<span>{JSON.stringify($lastname)}</span>
-		<span>{JSON.stringify($fullname)}</span>
-		<span>{JSON.stringify($myForm)}</span>
+		<Debug field={firstname} />
+		<Debug field={lastname} />
+		<Debug field={fullname} />
 	</div>
 
 	<h1>Welcome {$fullname.value}</h1>

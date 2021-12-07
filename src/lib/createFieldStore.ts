@@ -87,7 +87,7 @@ export function createFieldStore<T>(
 	v: T,
 	validators: Validator[] = [],
 	options: FieldOptions
-): Writable<Field<T>> & { validate: () => Promise<void>; reset: () => void } {
+): Writable<Field<T>> & { validate: () => Promise<Field<T>>; reset: () => void } {
 	const value = {
 		name,
 		value: v,
@@ -110,12 +110,14 @@ export function createFieldStore<T>(
 
 	async function validate() {
 		const errors = await getErrors(store, validators, options.stopAtFirstError);
+		let obj: Field<T>;
 
 		update((field) => {
-			return processField(field, errors, { dirty: false });
+			obj = processField(field, errors, { dirty: false });
+			return obj;
 		});
 
-		// return set(get(store), true);
+		return obj;
 	}
 
 	function reset() {
