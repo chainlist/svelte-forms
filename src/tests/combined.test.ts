@@ -68,7 +68,6 @@ describe('combined', () => {
 
 		const newMax = (n: number) => {
 			return (value: number) => {
-				console.log(`{ valid: ${value <= n}, name: 'newMax' }`);
 				return { valid: value <= n, name: 'newMax' };
 			};
 		};

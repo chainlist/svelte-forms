@@ -15,10 +15,11 @@
 		import('../docs/2_Examples.md'),
 		import('../docs/3_Form.md'),
 		import('../docs/4_Field.md'),
-		import('../docs/5_Validators.md'),
-		import('../docs/6_UseStyle.md'),
-		import('../docs/7_Migrating.md'),
-		import('../docs/8_Contribute.md')
+		import('../docs/5_Combined.md'),
+		import('../docs/6_Validators.md'),
+		import('../docs/7_UseStyle.md'),
+		import('../docs/8_Migrating.md'),
+		import('../docs/9_Contribute.md')
 	];
 
 	setContext('docs', docs);

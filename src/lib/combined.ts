@@ -11,7 +11,7 @@ export function combined<S extends Readable<Field<any>>[], T>(
 	fields: S,
 	reducer: (fields: FieldsValues<S>) => T,
 	validators: Validator[] = [],
-	options: FieldOptions = defaultFieldOptions
+	options: Pick<FieldOptions, 'stopAtFirstError'> = defaultFieldOptions
 ): Readable<Field<T>> & { validate: () => Promise<Field<T>> } {
 	let resolve: Promise<Field<T>>;
 	const { subscribe } = derived<S, Field<T>>(
@@ -45,7 +45,6 @@ export function combined<S extends Readable<Field<any>>[], T>(
 					});
 
 					set(obj);
-					console.log(obj);
 					return obj;
 				}
 			);
@@ -61,10 +60,6 @@ export function combined<S extends Readable<Field<any>>[], T>(
 	return {
 		subscribe,
 		validate: async () => {
-			for (const field of fields) {
-				console.log(await (field as any).validate());
-			}
-
 			return resolve;
 		}
 	};
