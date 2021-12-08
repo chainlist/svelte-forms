@@ -1,4 +1,4 @@
-# svelte-forms
+# svelte-forms [![https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master](https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master)](https://app.travis-ci.com/github/chainlist/svelte-forms)
 
 ## V2 is here! 🎊
 

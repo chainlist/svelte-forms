@@ -21,8 +21,8 @@
 		};
 	};
 
-	const firstname = field('firstname', 'kevin', [required(), name()]);
-	const lastname = field('lastname', 'guillouard', [required()]);
+	const firstname = field('firstname', '', [required(), name()]);
+	const lastname = field('lastname', '', [required()]);
 	const fullname = combined(
 		'fullname',
 		[firstname, lastname],

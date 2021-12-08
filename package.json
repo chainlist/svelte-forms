@@ -1,6 +1,6 @@
 {
 	"name": "svelte-forms",
-	"version": "2.0.4",
+	"version": "2.0.5",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build && touch build/.nojekyll",

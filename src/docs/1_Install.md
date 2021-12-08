@@ -2,6 +2,8 @@
 filename: 1_Install.md
 ---
 
+[![https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master](https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master)](https://app.travis-ci.com/github/chainlist/svelte-forms)
+
 ## getting started
 
 ### why
