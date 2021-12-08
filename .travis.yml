@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - '14'
+env:
+  global:
+    - BUILD_TIMEOUT=20000
+
+install:
+  - npm ci || npm install
+script: npm run test
