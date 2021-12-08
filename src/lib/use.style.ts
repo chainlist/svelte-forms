@@ -1,6 +1,3 @@
-import type { Readable } from 'svelte/store';
-import type { Field } from './createFieldStore';
-
 export function style(
 	node: HTMLElement,
 	{ field = null, valid = 'valid', invalid = 'invalid', dirty = 'dirty' } = {}

@@ -1,33 +1,57 @@
-<script>
-	import { form, field } from 'svelte-forms';
-	import { required, matchField, not, between } from 'svelte-forms/validators';
+<script lang="ts">
+	import Debug from '$components/Debug.svelte';
 
-	const password = field('password', '', [required()]);
-	const confirmation = field('password_confirmation', '', [matchField(password)]);
+	import { form, field, combined } from 'svelte-forms';
+	import { required } from 'svelte-forms/validators';
 
-	const age = field('age', 0, [not(between(0, 17))]);
+	function name() {
+		return async (value: string) => {
+			const users = (await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
+				r.json()
+			)) as any[];
+			const exists = (v: string) => !!users.find((u) => u.username === value);
 
-	const myForm = form(password, confirmation, age);
+			return { valid: !exists(value), name: 'check_name' };
+		};
+	}
+
+	const newMax = (n: string) => {
+		return (v: string) => {
+			return { valid: v !== n, name: 'newMax' };
+		};
+	};
+
+	const firstname = field('firstname', 'kevin', [required(), name()]);
+	const lastname = field('lastname', 'guillouard', [required()]);
+	const fullname = combined(
+		'fullname',
+		[firstname, lastname],
+		([f, l]) => [f.value, l.value].join(' '),
+		[newMax('kevin guillouard')]
+	);
+
+	const myForm = form(firstname, lastname, fullname);
 </script>
 
 <section class="p-10">
-	<input type="text" bind:value={$password.value} />
-	<input type="text" bind:value={$confirmation.value} />
-	<input type="number" bind:value={$age.value} />
+	<input type="text" bind:value={$firstname.value} />
+	<input type="text" bind:value={$lastname.value} />
 
-	{#if $myForm.hasError('password_confirmation.match_field')}
-		<p>Password don't match</p>
-	{/if}
+	<div class="flex flex-col gap-4">
+		<Debug field={firstname} />
+		<Debug field={lastname} />
+		<Debug field={fullname} />
+	</div>
 
-	{#if $myForm.hasError('age.between')}
-		<p>should be between</p>
-	{/if}
+	<h1>Welcome {$fullname.value}</h1>
 
-	{JSON.stringify($myForm)}
 	<br />
-	<button on:click={password.reset}>Reset name</button>
-	<button on:click={confirmation.reset}>Reset password</button>
-	<button on:click={myForm.reset}>Reset form</button>
+	<div class="space-x-3">
+		<button on:click={firstname.reset}>Reset name</button>
+		<button on:click={lastname.reset}>Reset password</button>
+		<button on:click={myForm.reset}>Reset form</button>
+		<button on:click={myForm.validate}>Validate form</button>
+	</div>
 </section>
 
 <style>

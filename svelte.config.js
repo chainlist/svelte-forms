@@ -40,6 +40,8 @@ const config = {
 			plugins: [mdPlugin.plugin({ mode: ['html', 'toc'], markdownIt: mdit })],
 			resolve: {
 				alias: {
+					$components: path.resolve('src/components'),
+					$utils: path.resolve('src/utils'),
 					'svelte-forms': path.resolve('src/lib'),
 					'svelte-forms/validators': path.resolve('src/lib/validators')
 				}
