@@ -1,4 +1,4 @@
-const n={filename:"7_Migrating.md"},e=`<h2 id="migrate-from-v-1" tabindex="-1">migrate from v1</h2>
+const n={filename:"8_Migrating.md"},e=`<h2 id="migrate-from-v-1" tabindex="-1">migrate from v1</h2>
 <h3 id="form-initialization" tabindex="-1">form initialization</h3>
 <pre><code class="language-typescript">/// v1
 import { form } from 'svelte-forms';

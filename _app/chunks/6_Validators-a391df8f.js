@@ -1,4 +1,4 @@
-const e={filename:"5_Validators.md"},n=`<h2 id="validators" tabindex="-1">Validators</h2>
+const e={filename:"6_Validators.md"},n=`<h2 id="validators" tabindex="-1">Validators</h2>
 <ul>
 <li>validators now need to be called directly, thus providing type safe auto-completion</li>
 <li>validators now return a function that return an object <code>{ valid: boolean, name: string = 'validator_name' }</code></li>

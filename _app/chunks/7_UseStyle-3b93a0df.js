@@ -1,4 +1,4 @@
-const t={filename:"6_UseStyle.md"},e=`<h2 id="use-style" tabindex="-1">use:style</h2>
+const t={filename:"7_UseStyle.md"},e=`<h2 id="use-style" tabindex="-1">use:style</h2>
 <pre><code class="language-typescript">function style({ field: store: Readable&lt;Field&lt;any&gt;&gt;, valid = &quot;valid&quot;, invalid = &quot;invalid&quot;, dirty = &quot;dirty&quot; });
 </code></pre>
 <p><code>use:style</code> will help you to <strong>automaticaly</strong> set the class of your HTML field to <code>valid</code> or <code>invalid</code> only if the field is <code>dirty</code>.</p>
