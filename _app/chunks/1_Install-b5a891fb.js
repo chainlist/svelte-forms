@@ -1,4 +1,5 @@
-const e={filename:"1_Install.md"},t=`<h2 id="getting-started" tabindex="-1">getting started</h2>
+const e={filename:"1_Install.md"},t=`<p><a href="https://app.travis-ci.com/github/chainlist/svelte-forms"><img src="https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master" alt="https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master"></a></p>
+<h2 id="getting-started" tabindex="-1">getting started</h2>
 <h3 id="why" tabindex="-1">why</h3>
 <p><code>svelte-forms</code> first came out because there were back then, no real form validation library for svelte. I then decided to create one that was easy to use... or I thought it was.</p>
 <p>The first version was taking advantage of the <code>onMount</code> method that could be used anywhere in the code and not just in a component; but a lot of issues started to arrive when <a href="https://kit.svelte.dev/">sveltekit</a> was announced.
