@@ -39,3 +39,8 @@ export type Form = {
 	dirty: boolean;
 	errors: string[];
 };
+
+export function isField<T>(field: any): field is Field<T> {
+	const keys = Object.keys(field);
+	return ['name', 'value', 'valid', 'invalid', 'errors'].every((key) => keys.includes(key));
+}

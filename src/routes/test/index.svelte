@@ -3,55 +3,21 @@
 
 	import { form, field, combined } from 'svelte-forms';
 	import { required } from 'svelte-forms/validators';
+	import { writable } from 'svelte/store';
 
-	function name() {
-		return async (value: string) => {
-			const users = (await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
-				r.json()
-			)) as any[];
-			const exists = (v: string) => !!users.find((u) => u.username === value);
+	const name = field('name', '');
 
-			return { valid: !exists(value), name: 'check_name' };
-		};
-	}
+	let someValueFromExternal = writable('');
 
-	const newMax = (n: string) => {
-		return (v: string) => {
-			return { valid: v !== n, name: 'newMax' };
-		};
-	};
-
-	const firstname = field('firstname', '', [required(), name()]);
-	const lastname = field('lastname', '', [required()]);
-	const fullname = combined(
-		'fullname',
-		[firstname, lastname],
-		([f, l]) => [f.value, l.value].join(' '),
-		[newMax('kevin guillouard')]
-	);
-
-	const myForm = form(firstname, lastname, fullname);
+	$: $name = $someValueFromExternal; // Doesn't work
 </script>
 
 <section class="p-10">
-	<input type="text" bind:value={$firstname.value} />
-	<input type="text" bind:value={$lastname.value} />
+	<h1>Field</h1>
 
-	<div class="flex flex-col gap-4">
-		<Debug field={firstname} />
-		<Debug field={lastname} />
-		<Debug field={fullname} />
-	</div>
+	<input type="text" bind:value={$someValueFromExternal} />
 
-	<h1>Welcome {$fullname.value}</h1>
-
-	<br />
-	<div class="space-x-3">
-		<button on:click={firstname.reset}>Reset name</button>
-		<button on:click={lastname.reset}>Reset password</button>
-		<button on:click={myForm.reset}>Reset form</button>
-		<button on:click={myForm.validate}>Validate form</button>
-	</div>
+	{$name.value}
 </section>
 
 <style>

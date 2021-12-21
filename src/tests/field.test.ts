@@ -67,5 +67,30 @@ describe('field()', () => {
 			expect(result.errors).toContain('required');
 			expect(result.errors).toContain('min');
 		});
+
+		it('we should be able to set with the value directly', async () => {
+			const name = field('name', '');
+
+			name.set('new value');
+			await name.validate();
+
+			const result = get(name);
+
+			expect(result.value).toEqual('new value');
+		});
+
+		it('we should be able to set with a field value', async () => {
+			const name = field('name', '');
+
+			let f = get(name);
+
+			f.value = 'new field value';
+			name.set(f);
+			await name.validate();
+
+			const result = get(name);
+
+			expect(result.value).toEqual('new field value');
+		});
 	});
 });

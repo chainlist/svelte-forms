@@ -3,7 +3,7 @@ import type { Writable, Updater, Readable } from 'svelte/store';
 import { writable, get } from 'svelte/store';
 import type { Field, FieldOptions } from './types';
 import type { FieldValidation, Validator } from './validators/validator';
-import { defaultFieldOptions } from './types';
+import { isField } from './types';
 
 export function createFieldOject<T>(
 	name: string,
@@ -87,7 +87,11 @@ export function createFieldStore<T>(
 	v: T,
 	validators: Validator[] = [],
 	options: FieldOptions
-): Writable<Field<T>> & { validate: () => Promise<Field<T>>; reset: () => void } {
+): Omit<Writable<Field<T>>, 'set'> & {
+	validate: () => Promise<Field<T>>;
+	reset: () => void;
+	set(this: void, value: Field<T> | T): void;
+} {
 	const value = {
 		name,
 		value: v,
@@ -99,7 +103,11 @@ export function createFieldStore<T>(
 	const store = writable<Field<T>>(value);
 	const { subscribe, update, set: _set } = store;
 
-	async function set(this: void, field: Field<T>, forceValidation: boolean = false) {
+	async function set(this: void, field: Field<T> | T, forceValidation: boolean = false) {
+		if (!isField(field)) {
+			field = processField(get(store), [], { value: field });
+		}
+
 		if (forceValidation || options.validateOnChange) {
 			let validations = await getErrors(field, validators, options.stopAtFirstError);
 			_set(processField(field, validations, { dirty: true }));
