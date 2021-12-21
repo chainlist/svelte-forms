@@ -7,6 +7,27 @@ const e={filename:"4_Field.md"},t=`<h2 id="field" tabindex="-1">field</h2>
 );
 </code></pre>
 <p><code>field()</code> returns a writable store and is a convenient function to create a new form input that will serve a your input controller.</p>
+<p>You can directly use the store to set the field value programatically if you need to.</p>
+<pre><code class="language-typescript">import { field } from 'svete-forms';
+import { get } from 'svelte/store';
+
+const name = field('name', '');
+
+// Prefered method to set value programatically
+name.set('New value');
+// or
+$name = 'New value';
+
+// You can also do that
+const fieldObj = get(name);
+fieldObject.value = 'New value';
+
+name.set(fieldObj);
+// or
+$name = fieldObj;
+
+// All cases work
+</code></pre>
 <h3 id="functions" tabindex="-1">functions</h3>
 <p>In addition there is two different functions that can be called on the store:</p>
 <ul>
