@@ -165,7 +165,7 @@ Of course this validator can be asynchronus and return a promise.
     return (value: string) => ({ valid: value === str, name: 'it_does_not_match' })
   }
 
-  const name = field('name', [checkName(), validatorWithParams('it should match this')])
+  const name = field('name', '', [checkName(), validatorWithParams('it should match this')])
 </script>
 
 <input type="text" bind:value={$name.value} />
