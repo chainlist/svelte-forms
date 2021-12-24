@@ -11,7 +11,7 @@ filename: 2_Examples.md
   import { form, field } from 'svelte-forms';
   import { required } from 'svelte-forms/validators';
 
-  const name = field('name', [required()]);
+  const name = field('name', '', [required()]);
   const myForm = form(name);
 </script>;
 
@@ -19,7 +19,7 @@ filename: 2_Examples.md
 <section>
   <input type="text" bind:value={$name.value} />
 
-  <button disabled={!$form.valid}>Send form</button>
+  <button disabled={!$myForm.valid}>Send form</button>
 </section>
 ```
 
