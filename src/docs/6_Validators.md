@@ -45,7 +45,7 @@ function url() => { valid: boolean, name : 'url' };
 import { field } from 'svelte-forms';
 import { url } from 'svelte-forms/validators';
 
-const name = field('name', '', s[url()]);
+const name = field('name', '', [url()]);
 ```
 
 ### min
