@@ -33,7 +33,7 @@ filename: 2_Examples.md
   const name = field('name', '', [required()]);
   const password = field('password', 'my_password', [required()]);
   const myForm = form(name, password);
-</script>;
+</script>
 
 
 <section>
