@@ -10,7 +10,7 @@ const e={filename:"6_Validators.md"},n=`<h2 id="validators" tabindex="-1">Valida
 <pre><code class="language-typescript">import { field } from 'svelte-forms';
 import { required } from 'svelte-forms/validators';
 
-const name = field('name', [required()]);
+const name = field('name', '', [required()]);
 </code></pre>
 <h3 id="email" tabindex="-1">email</h3>
 <pre><code class="language-typescript">function email() =&gt; { valid: boolean, name : 'email' };
@@ -18,7 +18,7 @@ const name = field('name', [required()]);
 <pre><code class="language-typescript">import { field } from 'svelte-forms';
 import { email } from 'svelte-forms/validators';
 
-const name = field('name', [email()]);
+const name = field('name', '', [email()]);
 </code></pre>
 <h3 id="url" tabindex="-1">url</h3>
 <pre><code class="language-typescript">function url() =&gt; { valid: boolean, name : 'url' };
@@ -26,7 +26,7 @@ const name = field('name', [email()]);
 <pre><code class="language-typescript">import { field } from 'svelte-forms';
 import { url } from 'svelte-forms/validators';
 
-const name = field('name', [url()]);
+const name = field('name', '', [url()]);
 </code></pre>
 <h3 id="min" tabindex="-1">min</h3>
 <pre><code class="language-typescript">function min(n: number) =&gt; { valid: boolean, name : 'min' };
@@ -34,7 +34,7 @@ const name = field('name', [url()]);
 <pre><code class="language-typescript">import { field } from 'svelte-forms';
 import { min } from 'svelte-forms/validators';
 
-const name = field('name', [min(3)]);
+const name = field('name', '', [min(3)]);
 
 // also works with numerical value
 const age = field('age', 0, [min(18)]);
@@ -45,7 +45,7 @@ const age = field('age', 0, [min(18)]);
 <pre><code class="language-typescript">import { field } from 'svelte-forms';
 import { max } from 'svelte-forms/validators';
 
-const name = field('name', [max(10)]);
+const name = field('name', '', [max(10)]);
 
 // also works with numerical value
 const age = field('age', 0, [max(18)]);
@@ -117,7 +117,7 @@ if ($myForm.hasError('age.between')) {
     return (value: string) =&gt; ({ valid: value === str, name: 'it_does_not_match' })
   }
 
-  const name = field('name', [checkName(), validatorWithParams('it should match this')])
+  const name = field('name', '', [checkName(), validatorWithParams('it should match this')])
 &lt;/script&gt;
 
 &lt;input type=&quot;text&quot; bind:value={$name.value} /&gt;

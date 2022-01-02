@@ -50,7 +50,7 @@ $name = fieldObj;
   import { form, field } from 'svelte-forms';
   import { required } from 'svelte-forms/validators';
 
-  const name = field('name', [required()], {
+  const name = field('name', '', [required()], {
     validateOnChange: false
   });
   const myForm = form(name);
