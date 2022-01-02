@@ -69,5 +69,6 @@
 	},
 	"author": {
 		"name": "Kevin Guillouard"
-	}
+	},
+	"license": "MIT"
 }
