@@ -19,7 +19,7 @@ function required() => { valid: boolean, name : 'required' };
 import { field } from 'svelte-forms';
 import { required } from 'svelte-forms/validators';
 
-const name = field('name', [required()]);
+const name = field('name', '', [required()]);
 ```
 
 ### email
@@ -32,7 +32,7 @@ function email() => { valid: boolean, name : 'email' };
 import { field } from 'svelte-forms';
 import { email } from 'svelte-forms/validators';
 
-const name = field('name', [email()]);
+const name = field('name', '', [email()]);
 ```
 
 ### url
@@ -45,7 +45,7 @@ function url() => { valid: boolean, name : 'url' };
 import { field } from 'svelte-forms';
 import { url } from 'svelte-forms/validators';
 
-const name = field('name', [url()]);
+const name = field('name', '', [url()]);
 ```
 
 ### min
@@ -58,7 +58,7 @@ function min(n: number) => { valid: boolean, name : 'min' };
 import { field } from 'svelte-forms';
 import { min } from 'svelte-forms/validators';
 
-const name = field('name', [min(3)]);
+const name = field('name', '', [min(3)]);
 
 // also works with numerical value
 const age = field('age', 0, [min(18)]);
@@ -74,7 +74,7 @@ function max(n: number) => { valid: boolean, name : 'max' };
 import { field } from 'svelte-forms';
 import { max } from 'svelte-forms/validators';
 
-const name = field('name', [max(10)]);
+const name = field('name', '', [max(10)]);
 
 // also works with numerical value
 const age = field('age', 0, [max(18)]);
@@ -165,7 +165,7 @@ Of course this validator can be asynchronus and return a promise.
     return (value: string) => ({ valid: value === str, name: 'it_does_not_match' })
   }
 
-  const name = field('name', [checkName(), validatorWithParams('it should match this')])
+  const name = field('name', '', [checkName(), validatorWithParams('it should match this')])
 </script>
 
 <input type="text" bind:value={$name.value} />
