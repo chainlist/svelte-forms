@@ -7,7 +7,7 @@ export function field<T>(
 	name: string,
 	value: T,
 	validators: Validator[] = [],
-	options: FieldOptions = defaultFieldOptions
+	options: Partial<FieldOptions> = {}
 ) {
-	return createFieldStore(name, value, validators, options);
+	return createFieldStore(name, value, validators, { ...defaultFieldOptions, ...options });
 }

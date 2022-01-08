@@ -1,31 +1,20 @@
-<script lang="ts">
-	import Debug from '$components/Debug.svelte';
+<script>
+	import { form, field } from 'svelte-forms';
+	import { min, required } from 'svelte-forms/validators';
 
-	import { form, field, combined } from 'svelte-forms';
-	import { required } from 'svelte-forms/validators';
-	import { writable } from 'svelte/store';
-
-	const name = field('name', '');
-
-	let someValueFromExternal = writable('');
-
-	$: $name = $someValueFromExternal; // Doesn't work
+	const name = field('name', '', [required(), min(2)], { checkOnInit: true });
+	const myForm = form(name);
 </script>
 
-<section class="p-10">
-	<h1>Field</h1>
-
-	<input type="text" bind:value={$someValueFromExternal} />
-
-	{$name.value}
+<section>
+	<input type="text" bind:value={$name.value} />
+	<button disabled={!$myForm.valid}>Send form</button>
 </section>
 
-<style>
-	section {
-	}
-	input {
-		display: block;
-		border: 1px solid gray;
-		margin-bottom: 10px;
-	}
-</style>
+<pre>
+	{JSON.stringify($name, null, 2)}
+</pre>
+
+<pre>
+	{JSON.stringify($myForm, null, 2)}
+</pre>
