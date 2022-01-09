@@ -1,7 +1,7 @@
-import { createFieldStore } from './createFieldStore';
-import type { FieldOptions } from './types';
-import { defaultFieldOptions } from './types';
-import type { Validator } from './validators/validator';
+import { createFieldStore } from './createFieldStore.js';
+import type { FieldOptions } from './types.js';
+import { defaultFieldOptions } from './types.js';
+import type { Validator } from './validators/validator.js';
 
 export function field<T>(
 	name: string,

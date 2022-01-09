@@ -1,10 +1,10 @@
-import type { Validator } from './validators/validator';
+import type { Validator } from './validators/validator.js';
 import type { Readable } from 'svelte/store';
 import { get } from 'svelte/store';
 import { derived } from 'svelte/store';
-import type { Field, FieldOptions, FieldsValues } from './types';
-import { createFieldOject, getErrors } from './createFieldStore';
-import { defaultFieldOptions } from './types';
+import type { Field, FieldOptions, FieldsValues } from './types.js';
+import { createFieldOject, getErrors } from './createFieldStore.js';
+import { defaultFieldOptions } from './types.js';
 
 export function combined<S extends Readable<Field<any>>[], T>(
 	name: string,

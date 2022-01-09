@@ -1,4 +1,4 @@
-import type { Validator } from './validator';
+import type { Validator } from './validator.js';
 
 export function between(min: number, max: number): Validator {
 	return (value: any) => {

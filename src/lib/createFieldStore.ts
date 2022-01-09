@@ -1,9 +1,9 @@
 import isPromise from 'is-promise';
 import type { Writable, Updater, Readable } from 'svelte/store';
 import { writable, get } from 'svelte/store';
-import type { Field, FieldOptions } from './types';
-import type { FieldValidation, Validator } from './validators/validator';
-import { isField } from './types';
+import type { Field, FieldOptions } from './types.js';
+import type { FieldValidation, Validator } from './validators/validator.js';
+import { isField } from './types.js';
 
 export function createFieldOject<T>(
 	name: string,

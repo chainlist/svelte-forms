@@ -1,10 +1,12 @@
 module.exports = {
+	verbose: true,
 	transform: {
 		'^.+\\.ts$': 'ts-jest',
 		'^.+\\.js$': 'ts-jest'
 	},
 	moduleFileExtensions: ['js', 'ts', 'svelte'],
 	moduleNameMapper: {
+		'^\\./(.*)\\.js$': './$1',
 		'^\\$lib(.*)$': '<rootDir>/src/lib$1',
 		'^\\$app(.*)$': [
 			'<rootDir>/.svelte-kit/dev/runtime/app$1',

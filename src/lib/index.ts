@@ -1,6 +1,6 @@
-export type { Validator, FieldValidation } from './validators/validator';
-export { form } from './form';
-export { field } from './field';
-export { style } from './use.style';
-export { combined } from './combined';
-export { defaultFieldOptions as defaultFieldOptions } from './types';
+export type { Validator, FieldValidation } from './validators/validator.js';
+export { form } from './form.js';
+export { field } from './field.js';
+export { style } from './use.style.js';
+export { combined } from './combined.js';
+export { defaultFieldOptions as defaultFieldOptions } from './types.js';
