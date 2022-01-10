@@ -6,3 +6,4 @@ export * from './required.js';
 export * from './url.js';
 export * from './matchField.js';
 export * from './not.js';
+export * from './pattern.js';

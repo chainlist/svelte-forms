@@ -99,6 +99,20 @@ const name = field('name', '', [min(3), max(10)]);
 const age = field('age', 0, [between(0, 18)]);
 ```
 
+### pattern
+
+```typescript
+function pattern(reg: RegEx) => { valid: boolean, name : 'pattern' };
+```
+
+```typescript
+import { field } from 'svelte-forms';
+import { pattern } from 'svelte-forms/validators';
+
+const age = field('age', '', [pattern(/\d+/)]);
+const firstname = field('name', '', [pattern(/\w+/)]);
+```
+
 ### matchField
 
 ```typescript
