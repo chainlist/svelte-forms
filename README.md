@@ -7,4 +7,4 @@ Check out the new documentation website [here](https://chainlist.github.io/svelt
 
 ## todo list
 
-- Fix the issues when they appears! :)
+- Fix the issues when they appear! :)
