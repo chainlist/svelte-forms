@@ -64,6 +64,15 @@ const name = field('name', '', [min(3), max(10)]);
 // also works with numerical value
 const age = field('age', 0, [between(0, 18)]);
 </code></pre>
+<h3 id="pattern" tabindex="-1">pattern</h3>
+<pre><code class="language-typescript">function pattern(reg: RegEx) =&gt; { valid: boolean, name : 'pattern' };
+</code></pre>
+<pre><code class="language-typescript">import { field } from 'svelte-forms';
+import { pattern } from 'svelte-forms/validators';
+
+const age = field('age', '', [pattern(/\\d+/)]);
+const firstname = field('name', '', [pattern(/\\w+/)]);
+</code></pre>
 <h3 id="match-field" tabindex="-1">matchField</h3>
 <pre><code class="language-typescript">function matchField(store: Readable&lt;Field&lt;any&gt;&gt;) =&gt; { valid: boolean, name : 'match_field' };
 </code></pre>
@@ -122,4 +131,4 @@ if ($myForm.hasError('age.between')) {
 
 &lt;input type=&quot;text&quot; bind:value={$name.value} /&gt;
 </code></pre>
-`,t=[{level:"2",content:"Validators"},{level:"3",content:"required"},{level:"3",content:"email"},{level:"3",content:"url"},{level:"3",content:"min"},{level:"3",content:"max"},{level:"3",content:"between"},{level:"3",content:"matchField"},{level:"3",content:"not"},{level:"3",content:"custom validator"}];export{e as attributes,n as html,t as toc};
+`,t=[{level:"2",content:"Validators"},{level:"3",content:"required"},{level:"3",content:"email"},{level:"3",content:"url"},{level:"3",content:"min"},{level:"3",content:"max"},{level:"3",content:"between"},{level:"3",content:"pattern"},{level:"3",content:"matchField"},{level:"3",content:"not"},{level:"3",content:"custom validator"}];export{e as attributes,n as html,t as toc};

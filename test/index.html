@@ -10,22 +10,20 @@
 
 		
 
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-319ec473.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-68fe0a4d.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/preload-helper-cd5f4ade.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-3b37b8a1.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-1ecd629a.js">
 		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/start-464e9d0a.css">
 		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/vendor-b00f1465.css">
-		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/pages/test/index.svelte-1b3cf237.css">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-8b226f76.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-79d26fd6.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/preload-helper-cd5f4ade.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-095114c5.js">
+		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-dc53100b.js">
 
 		<script type="module">
-			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-319ec473.js";
+			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-8b226f76.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"/svelte-forms","assets":"https://chainlist.github.io/svelte-forms"},
 				session: {},
-				host: location.host,
 				route: true,
 				spa: false,
 				trailing_slash: "never",
@@ -33,15 +31,11 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-3b37b8a1.js"),
-						import("https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-1ecd629a.js")
+						import("https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-095114c5.js"),
+						import("https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-dc53100b.js")
 					],
-					page: {
-						host: location.host, // TODO this is redundant
-						path: "\u002Ftest",
-						query: new URLSearchParams(""),
-						params: {}
-					}
+					url: new URL("http://prerender/test"),
+					params: {}
 				}
 			});
 		</script>
@@ -50,16 +44,27 @@
 		<div id="svelte">
 
 
-<section class="p-10"><h1>Field</h1>
+<section><input type="text" value="">
 
-	<input type="text" class="svelte-11n4mq4" value="">
+	{}
 
-	undefined
-</section>
+	<button >Send form</button></section>
 
+<pre>{
+  &quot;name&quot;: &quot;name&quot;,
+  &quot;value&quot;: &quot;&quot;,
+  &quot;valid&quot;: true,
+  &quot;invalid&quot;: false,
+  &quot;dirty&quot;: false,
+  &quot;errors&quot;: []
+}</pre>
 
+<pre>{
+  &quot;valid&quot;: true,
+  &quot;dirty&quot;: false,
+  &quot;errors&quot;: []
+}</pre>
 
-			
-		</div>
+</div>
 	</body>
 </html>
