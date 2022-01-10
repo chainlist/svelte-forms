@@ -1,5 +1,5 @@
 
-# svelte-forms [![https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master](https://app.travis-ci.com/chainlist/svelte-forms.svg?branch=master)](https://app.travis-ci.com/github/chainlist/svelte-forms)
+# svelte-forms [![Tests](https://github.com/chainlist/svelte-forms/actions/workflows/tests.js.yml/badge.svg)](https://github.com/chainlist/svelte-forms/actions/workflows/tests.js.yml)
 
 ## V2 is here! 🎊
 
