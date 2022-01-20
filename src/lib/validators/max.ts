@@ -1,9 +1,9 @@
 import type { Validator } from './validator.js';
 
-export function max(n: number): Validator {
+export function max(n: number, name = 'max'): Validator {
 	return (value: any) => {
 		const val = typeof value === 'string' ? value.length : isNaN(value) ? 0 : parseFloat(value);
 
-		return { valid: val <= n, name: 'max' };
+		return { valid: val <= n, name };
 	};
 }
