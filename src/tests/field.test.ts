@@ -71,8 +71,7 @@ describe('field()', () => {
 		it('we should be able to set with the value directly', async () => {
 			const name = field('name', '');
 
-			name.set('new value');
-			await name.validate();
+			await name.set('new value');
 
 			const result = get(name);
 
@@ -85,12 +84,37 @@ describe('field()', () => {
 			let f = get(name);
 
 			f.value = 'new field value';
-			name.set(f);
-			await name.validate();
+			await name.set(f);
 
 			const result = get(name);
 
 			expect(result.value).toEqual('new field value');
 		});
+
+		it('should start off not dirty', () => {
+			const name = field('name', '')
+			expect(get(name).dirty).toBe(false)
+		});
+
+		it('should be marked as dirty when value is set', async () => {
+			const name = field('name', '')
+			await name.set('new value')
+			expect(get(name).dirty).toBe(true)
+		});
+		
+		it('should be manually marked as dirty and not dirty', () => {
+			const name = field('name', '')
+			name.setDirty(true)
+			expect(get(name).dirty).toBe(true)
+			name.setDirty(false)
+			expect(get(name).dirty).toBe(false)
+		})
+		
+		it('should mark as not dirty during reset', () => {
+			const name = field('name', '')
+			name.setDirty(true)
+			name.reset()
+			expect(get(name).dirty).toBe(false)
+		})
 	});
 });

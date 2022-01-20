@@ -26,11 +26,6 @@ describe('combined', () => {
 		const c = combined('fullname', [a, b], ([c, d]) => c.value + d.value);
 
 		await a.validate();
-		const values = [];
-
-		c.subscribe((data) => {
-			values.push(data);
-		});
 
 		expect(get(c)).toEqual({
 			dirty: false,

@@ -20,7 +20,7 @@ export function createFieldOject<T>(
 		dirty: false
 	};
 
-	return processField(field, errors, partialField);
+	return processField(field, partialField, errors);
 }
 
 export function getValue<T>(value: T | Field<T> | Readable<Field<T>>): T {
@@ -69,17 +69,16 @@ export async function getErrors<T>(
 
 export function processField<T>(
 	field: Field<T>,
+	partialField?: Partial<Field<T>>,
 	validations?: FieldValidation[],
-	partialField: Partial<Field<T>> = {}
 ) {
 	if (validations) {
 		const errors = validations.filter((v) => !v.valid).map((v) => v.name);
 		const valid = !errors.length;
 		return { ...field, valid, invalid: !valid, errors, ...partialField };
-		// return { ...field, dirty: field.dirty || !!validations.length, valid, invalid: !valid, errors, ...partialField };
 	}
 
-	return field;
+	return { ...field, ...(partialField || {}) };
 }
 
 export function createFieldStore<T>(
@@ -91,6 +90,7 @@ export function createFieldStore<T>(
 	validate: () => Promise<Field<T>>;
 	reset: () => void;
 	set(this: void, value: Field<T> | T): void;
+	setDirty(dirty: boolean): void;
 } {
 	const value = {
 		name,
@@ -105,14 +105,14 @@ export function createFieldStore<T>(
 
 	async function set(this: void, field: Field<T> | T, forceValidation: boolean = false) {
 		if (!isField(field)) {
-			field = processField(get(store), [], { value: field });
+			field = processField(get(store), { value: field }, []);
 		}
 
 		if (forceValidation || options.validateOnChange) {
 			let validations = await getErrors(field, validators, options.stopAtFirstError);
-			_set(processField(field, validations, { dirty: true }));
+			_set(processField(field, { dirty: true }, validations));
 		} else {
-			_set(processField(field, [], { dirty: true }));
+			_set(processField(field, { dirty: true }, []));
 		}
 	}
 
@@ -120,10 +120,7 @@ export function createFieldStore<T>(
 		const errors = await getErrors(store, validators, options.stopAtFirstError);
 		let obj: Field<T>;
 
-		update((field) => {
-			obj = processField(field, errors, { dirty: false });
-			return obj;
-		});
+		update(field => processField(field, null, errors));
 
 		return obj;
 	}
@@ -145,5 +142,9 @@ export function createFieldStore<T>(
 		set(value);
 	}
 
-	return { subscribe, update, set, validate, reset };
+	async function setDirty(dirty: boolean) {
+		update(field => processField(field, { dirty }))
+	}
+
+	return { subscribe, update, set, setDirty, validate, reset };
 }
