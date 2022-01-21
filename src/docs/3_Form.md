@@ -22,6 +22,7 @@ In addition there is two different functions that can be called on the store:
 - `reset()` which resets all the binded `field`
 - `validate()` which launches a manual validation of all the binded `field`
 - `getField(name: string): Writable<Field<any>>` which returns a previously binded `field`. Useful when you pass your form around components.
+- `summary()` returns an object the represents the current state of all values that have been entered in the form
 
 ### hasError
 
