@@ -45,6 +45,7 @@ In addition there is two different functions that can be called on the store:
 
 - `reset()` which resets the field itself
 - `validate()` which launches a validation on itself
+- `setDirty(dirty: boolean)` which allows manually setting a field as clean or dirty when necessary
 
 ### options
 
