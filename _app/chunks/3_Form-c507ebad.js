@@ -13,6 +13,7 @@ const e={filename:"3_Form.md"},t=`<h2 id="form" tabindex="-1">form</h2>
 <li><code>reset()</code> which resets all the binded <code>field</code></li>
 <li><code>validate()</code> which launches a manual validation of all the binded <code>field</code></li>
 <li><code>getField(name: string): Writable&lt;Field&lt;any&gt;&gt;</code> which returns a previously binded <code>field</code>. Useful when you pass your form around components.</li>
+<li><code>summary()</code> returns an object that represents the current state of all the fields that have been linked to the form</li>
 </ul>
 <h3 id="has-error" tabindex="-1">hasError</h3>
 <blockquote>
