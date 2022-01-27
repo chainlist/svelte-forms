@@ -31,4 +31,15 @@ describe('form()', () => {
 
 		expect(() => form(name, name)).toThrowError();
 	});
+
+	it('should create a form summary', () => {
+		const firstName = field('firstName', 'John');
+		const lastName = field('lastName', 'Doe');
+		const myForm = form(firstName, lastName);
+
+		expect(myForm.summary()).toEqual({
+			firstName: 'John',
+			lastName: 'Doe'
+		});
+	});
 });

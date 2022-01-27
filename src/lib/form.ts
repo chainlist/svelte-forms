@@ -64,5 +64,14 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		return fields.find((f) => get(f).name === name);
 	}
 
-	return { subscribe, reset, validate, getField };
+	function summary(): Record<string, any> {
+		return fields.reduce((carry, field) => {
+			const fieldContent = get(field);
+			carry[fieldContent.name] = fieldContent.value;
+
+			return carry;
+		}, {});
+	}
+
+	return { subscribe, reset, validate, getField, summary };
 }
