@@ -6,7 +6,7 @@
 		"validations",
 		"svelte-forms"
 	],
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build && touch build/.nojekyll",
@@ -19,8 +19,9 @@
 		"test": "jest --runInBand",
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage",
-		"deploy": "pnpm run test && pnpm run build && npx gh-pages -d build -t true",
-		"publish": "pnpm run package && cd package && npm publish"
+		"deploy:docs": "pnpm run test && pnpm run build && npx gh-pages -d build -t true",
+		"deploy:package": "pnpm run package && cd package && npm publish",
+		"deploy": "pnpm run deploy:docs && pnpm run deploy:package"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.16.7",
