@@ -1,5 +1,5 @@
 
-# svelte-forms [![Tests](https://github.com/chainlist/svelte-forms/actions/workflows/tests.js.yml/badge.svg)](https://github.com/chainlist/svelte-forms/actions/workflows/tests.js.yml)
+# svelte-forms [![Tests](https://github.com/chainlist/svelte-forms/actions/workflows/tests.js.yml/badge.svg)](https://github.com/chainlist/svelte-forms/actions/workflows/tests.js.yml) [![Downloads](https://img.shields.io/npm/dt/svelte-forms)](https://www.npmjs.com/package/svelte-forms)
 
 ## V2 is here! 🎊
 
