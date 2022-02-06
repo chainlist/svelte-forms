@@ -44,7 +44,7 @@ lastname.validate();
   const lastname = field('lastname', '', [required()]);
   const fullname = combined('fullname', [firstname, lastname], ([firstname, lastname]) =&gt; [firstname.value, lastname.value].join(' '));
 
-  const myForm = form(name);
+  const myForm = form(fullname);
 &lt;/script&gt;
 
 &lt;section&gt;
@@ -61,7 +61,7 @@ lastname.validate();
 
   &lt;div&gt;Welcome {$fullname.value}&lt;/div&gt;
 
-  &lt;button on:click={name.validate}&gt;Validate field&lt;/button&gt;
+  &lt;button on:click={fullname.validate}&gt;Validate field&lt;/button&gt;
 &lt;/section&gt;
 </code></pre>
 `,n=[{level:"2",content:"combined"},{level:"3",content:"functions"},{level:"3",content:"options"},{level:"3",content:"example"}];export{e as attributes,t as html,n as toc};
