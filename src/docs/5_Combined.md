@@ -57,7 +57,7 @@ type CombinedOptions = {
   const lastname = field('lastname', '', [required()]);
   const fullname = combined('fullname', [firstname, lastname], ([firstname, lastname]) => [firstname.value, lastname.value].join(' '));
 
-  const myForm = form(name);
+  const myForm = form(fullname);
 </script>
 
 <section>
@@ -74,6 +74,6 @@ type CombinedOptions = {
 
   <div>Welcome {$fullname.value}</div>
 
-  <button on:click={name.validate}>Validate field</button>
+  <button on:click={fullname.validate}>Validate field</button>
 </section>
 ```
