@@ -43,7 +43,8 @@ $name = fieldObj;
 
 In addition there is two different functions that can be called on the store:
 
-- `reset()` which resets the field itself
+- `reset()` which resets the field to its default value (value passed when created)
+- `clear()` which clear the field and set its value to `null`
 - `validate()` which launches a validation on itself
 
 ### options

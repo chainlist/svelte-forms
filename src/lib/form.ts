@@ -29,11 +29,17 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		return {
 			valid: values.every((value) => value.valid),
 			dirty: values.some((value) => value.dirty),
-			summary: values.reduce((carry, f) => {
-				carry[f.name] = f.value;
 
-				return carry;
-			}, {}),
+			// Summary as a getter to avoid useless computation of data
+			// if no one wants it
+			get summary() {
+				return values.reduce((carry, f) => {
+					carry[f.name] = f.value;
+
+					return carry;
+				}, {});
+			},
+
 			errors: values
 				.map((value) => {
 					return value.errors.map((e) => {
@@ -59,6 +65,10 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		fields.forEach((field: any) => field.reset && field.reset());
 	}
 
+	function clear() {
+		fields.forEach((field: any) => field.clear && field.clear());
+	}
+
 	async function validate() {
 		for (const field of fields) {
 			if ((field as any).validate) await (field as any).validate();
@@ -73,5 +83,5 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		return get(store).summary;
 	}
 
-	return { subscribe, reset, validate, getField, summary };
+	return { subscribe, reset, validate, getField, summary, clear };
 }

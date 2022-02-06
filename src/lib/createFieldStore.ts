@@ -90,6 +90,7 @@ export function createFieldStore<T>(
 ): Omit<Writable<Field<T>>, 'set'> & {
 	validate: () => Promise<Field<T>>;
 	reset: () => void;
+	clear: () => void;
 	set(this: void, value: Field<T> | T): void;
 } {
 	const value = {
@@ -145,5 +146,18 @@ export function createFieldStore<T>(
 		set(value);
 	}
 
-	return { subscribe, update, set, validate, reset };
+	function clear() {
+		_set(
+			processField({
+				dirty: false,
+				errors: [],
+				name,
+				valid: options.valid,
+				invalid: !options.valid,
+				value: null
+			})
+		);
+	}
+
+	return { subscribe, update, set, validate, reset, clear };
 }
