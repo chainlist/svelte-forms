@@ -29,6 +29,11 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 		return {
 			valid: values.every((value) => value.valid),
 			dirty: values.some((value) => value.dirty),
+			summary: values.reduce((carry, f) => {
+				carry[f.name] = f.value;
+
+				return carry;
+			}, {}),
 			errors: values
 				.map((value) => {
 					return value.errors.map((e) => {
@@ -65,12 +70,7 @@ export function form(...fields: (Writable<Field<any>> | Readable<Field<any>>)[])
 	}
 
 	function summary(): Record<string, any> {
-		return fields.reduce((carry, field) => {
-			const fieldContent = get(field);
-			carry[fieldContent.name] = fieldContent.value;
-
-			return carry;
-		}, {});
+		return get(store).summary;
 	}
 
 	return { subscribe, reset, validate, getField, summary };
