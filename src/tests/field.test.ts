@@ -92,5 +92,27 @@ describe('field()', () => {
 
 			expect(result.value).toEqual('new field value');
 		});
+
+		it('we should be able to reset a field', async () => {
+			const name = field('name', 'default value');
+
+			let f = get(name);
+			f.value = 'new value';
+			name.reset();
+
+			const result = get(name);
+			expect(result.value).toEqual('default value');
+		});
+
+		it('we should be able to clear a field', async () => {
+			const name = field('name', 'default value');
+
+			let f = get(name);
+			f.value = 'new value';
+			name.clear();
+
+			const result = get(name);
+			expect(result.value).toBeNull();
+		});
 	});
 });

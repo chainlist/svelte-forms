@@ -1,5 +1,12 @@
 # svelte-forms
 
+## 2.3.0
+
+### Minor Changes
+
+- add clear function to field and form
+- add summary property to reflect data from binded fields
+
 ## 2.2.1
 
 ### Patch Changes
