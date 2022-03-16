@@ -6,53 +6,28 @@
 		<link rel="icon" href="/svelte-forms/favicon.png" />
 		<!-- <link rel="stylesheet" href="/prism.css" /> -->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
-
-		
-
-		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/vendor-b00f1465.css">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-2442ad20.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-79d26fd6.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/preload-helper-cd5f4ade.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-095114c5.js">
-		<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-5202cb2d.js">
-
-		<script type="module">
-			import { start } from "https://chainlist.github.io/svelte-forms/_app/start-2442ad20.js";
-			start({
-				target: document.querySelector("#svelte"),
-				paths: {"base":"/svelte-forms","assets":"https://chainlist.github.io/svelte-forms"},
-				session: {},
-				route: true,
-				spa: false,
-				trailing_slash: "never",
-				hydrate: {
-					status: 200,
-					error: null,
-					nodes: [
-						import("https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-095114c5.js"),
-						import("https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-5202cb2d.js")
-					],
-					url: new URL("http://prerender/test"),
-					params: {}
-				}
-			});
-		</script>
+		<meta http-equiv="content-security-policy" content="">
+	<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/vendor-b00f1465.css">
+	<link rel="stylesheet" href="https://chainlist.github.io/svelte-forms/_app/assets/pages/test/index.svelte-03ff345a.css">
+	<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/start-75733b4d.js">
+	<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/vendor-a91cbba7.js">
+	<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/chunks/preload-helper-cd5f4ade.js">
+	<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-eb81ccab.js">
+	<link rel="modulepreload" href="https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-df8b9d95.js">
 	</head>
 	<body class="text-2xl relative">
 		<div id="svelte">
 
 
-<section><input type="text" value="">
+<section><input type="text" class="svelte-1xg1zrm" value="Default value">
 
-	{}
-
+	<button>Clear</button>
+	<button>Reset</button>
 	<button >Send form</button></section>
 
 <pre>{
   &quot;name&quot;: &quot;name&quot;,
-  &quot;value&quot;: &quot;&quot;,
+  &quot;value&quot;: &quot;Default value&quot;,
   &quot;valid&quot;: true,
   &quot;invalid&quot;: false,
   &quot;dirty&quot;: false,
@@ -62,9 +37,34 @@
 <pre>{
   &quot;valid&quot;: true,
   &quot;dirty&quot;: false,
+  &quot;summary&quot;: {
+    &quot;name&quot;: &quot;Default value&quot;
+  },
   &quot;errors&quot;: []
-}</pre>
+}
+</pre>
 
-</div>
+
+		<script type="module" data-hydrate="i8mla1">
+		import { start } from "https://chainlist.github.io/svelte-forms/_app/start-75733b4d.js";
+		start({
+			target: document.querySelector('[data-hydrate="i8mla1"]').parentNode,
+			paths: {"base":"/svelte-forms","assets":"https://chainlist.github.io/svelte-forms"},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [
+					import("https://chainlist.github.io/svelte-forms/_app/pages/test/__layout.reset.svelte-eb81ccab.js"),
+						import("https://chainlist.github.io/svelte-forms/_app/pages/test/index.svelte-df8b9d95.js")
+				],
+				url: new URL("http://sveltekit-prerender/svelte-forms/test"),
+				params: {}
+			}
+		});
+	</script></div>
 	</body>
 </html>

@@ -31,7 +31,8 @@ $name = fieldObj;
 <h3 id="functions" tabindex="-1">functions</h3>
 <p>In addition there is two different functions that can be called on the store:</p>
 <ul>
-<li><code>reset()</code> which resets the field itself</li>
+<li><code>reset()</code> which resets the field to its default value (value passed when created)</li>
+<li><code>clear()</code> which clear the field and set its value to <code>null</code></li>
 <li><code>validate()</code> which launches a validation on itself</li>
 </ul>
 <h3 id="options" tabindex="-1">options</h3>
