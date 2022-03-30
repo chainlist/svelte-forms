@@ -6,7 +6,7 @@
 		"validations",
 		"svelte-forms"
 	],
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build && touch build/.nojekyll",
