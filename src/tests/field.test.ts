@@ -1,5 +1,5 @@
 import { field } from '$lib';
-import { min, required } from '$lib/validators';
+import { min, required, email } from '$lib/validators';
 import { get } from 'svelte/store';
 
 describe('field()', () => {
@@ -114,5 +114,19 @@ describe('field()', () => {
 			const result = get(name);
 			expect(result.value).toBeNull();
 		});
+	});
+
+	it('should remain invalid on change', async () => {
+		let emailOptions = { validateOnChange: false, valid: false };
+		const emailField = field('emailField', "", [email()], emailOptions);
+
+		emailField.set(get(field('emailField', 'not an email', [email()], emailOptions)));
+		expect(get(emailField).valid).toEqual(false);
+
+		emailField.set(get(field('emailField', 'hello@email.com', [email()], emailOptions)));
+		expect(get(emailField).valid).toEqual(false);
+		
+		await emailField.validate();
+		expect(get(emailField).valid).toEqual(true);
 	});
 });

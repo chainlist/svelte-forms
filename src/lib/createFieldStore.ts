@@ -75,7 +75,7 @@ export function processField<T>(
 	if (validations) {
 		const errors = validations.filter((v) => !v.valid).map((v) => v.name);
 		const valid = !errors.length;
-		return { ...field, valid, invalid: !valid, errors, ...partialField };
+		return { ...field, valid: valid, invalid: !valid, errors, ...partialField };
 		// return { ...field, dirty: field.dirty || !!validations.length, valid, invalid: !valid, errors, ...partialField };
 	}
 
@@ -113,7 +113,7 @@ export function createFieldStore<T>(
 			let validations = await getErrors(field, validators, options.stopAtFirstError);
 			_set(processField(field, validations, { dirty: true }));
 		} else {
-			_set(processField(field, [], { dirty: true }));
+			_set(processField(field, null, { dirty: true }));
 		}
 	}
 
