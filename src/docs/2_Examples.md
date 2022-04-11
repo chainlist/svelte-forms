@@ -13,7 +13,7 @@ filename: 2_Examples.md
 
   const name = field('name', '', [required()]);
   const myForm = form(name);
-</script>;
+</script>
 
 
 <section>
