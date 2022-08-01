@@ -25,7 +25,7 @@ const name = field('name', '', [required()]);
 ### email
 
 ```typescript
-function email() => { valid: boolean, name : 'email' };
+function email() => { valid: boolean, name : 'not_an_email' };
 ```
 
 ```typescript
