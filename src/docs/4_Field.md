@@ -18,7 +18,7 @@ function field<T>(
 You can directly use the store to set the field value programatically if you need to.
 
 ```typescript
-import { field } from 'svete-forms';
+import { field } from 'svelte-forms';
 import { get } from 'svelte/store';
 
 const name = field('name', '');
