@@ -5,7 +5,8 @@ filename: 6_Validators.md
 ## Validators
 
 - validators now need to be called directly, thus providing type safe auto-completion
-- validators now return a function that return an object `{ valid: boolean, name: string = 'validator_name' }`
+- validators now return a function that return an object `{ valid: boolean, name: string = 'validator_name' }
+- All built-in validators can be passed an additional parameter with a custom error name, e.g. `required('field is required')` or `between(0, 10, 'not between 1 and 10')`
 
 Check [custom validators](#custom-validator) for more info
 
