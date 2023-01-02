@@ -13,7 +13,7 @@ function field<T>(
 );
 ```
 
-`field()` returns a writable store and is a convenient function to create a new form input that will serve a your input controller.
+`field()` returns a writable store and is a convenient function to create a new form input that will serve as your input controller.
 
 You can directly use the store to set the field value programatically if you need to.
 
