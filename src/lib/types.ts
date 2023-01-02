@@ -5,6 +5,7 @@ export type FieldOptions = {
 	checkOnInit: boolean;
 	validateOnChange: boolean;
 	stopAtFirstError: boolean;
+	isOptional: boolean;
 };
 
 export type Field<T> = {
@@ -20,7 +21,8 @@ export const defaultFieldOptions: FieldOptions = {
 	valid: true,
 	checkOnInit: false,
 	validateOnChange: true,
-	stopAtFirstError: false
+	stopAtFirstError: false,
+	isOptional: false
 };
 
 export type FieldsValues<T> = T extends Readable<infer U>
