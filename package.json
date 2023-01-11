@@ -32,6 +32,7 @@
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/svelte": "^3.2.2",
 		"@types/jest": "^27.5.2",
+		"@types/jest-in-case": "^1.0.6",
 		"@types/lodash": "^4.14.191",
 		"@types/lodash.kebabcase": "^4.1.7",
 		"@types/markdown-it": "^12.2.3",
