@@ -45,7 +45,7 @@ export async function getErrors<T>(
 	value: T | Field<T> | Readable<Field<T>>,
 	validators: Validator[],
 	stopAtFirstError = false,
-	isOptional = false,
+	isOptional = false
 ) {
 	const v = getValue(value);
 
@@ -116,7 +116,12 @@ export function createFieldStore<T>(
 		}
 
 		if (forceValidation || options.validateOnChange) {
-			let validations = await getErrors(field, validators, options.stopAtFirstError, options.isOptional);
+			let validations = await getErrors(
+				field,
+				validators,
+				options.stopAtFirstError,
+				options.isOptional
+			);
 			_set(processField(field, validations, { dirty: true }));
 		} else {
 			_set(processField(field, null, { dirty: true }));

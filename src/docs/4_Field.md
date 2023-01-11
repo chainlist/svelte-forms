@@ -64,22 +64,22 @@ type FieldOptions = {
 
 ```svelte
 <script>
-  import { form, field } from 'svelte-forms';
-  import { required } from 'svelte-forms/validators';
+	import { form, field } from 'svelte-forms';
+	import { required } from 'svelte-forms/validators';
 
-  const name = field('name', '', [required()], {
-    validateOnChange: false
-  });
-  const myForm = form(name);
+	const name = field('name', '', [required()], {
+		validateOnChange: false
+	});
+	const myForm = form(name);
 </script>
 
 <section>
-  <input type="text" bind:value={$name.value}>
+	<input type="text" bind:value={$name.value} />
 
-  {#if $myForm.hasError('name.required')}
-    <div>Name is required</div>
-  {/if}
+	{#if $myForm.hasError('name.required')}
+		<div>Name is required</div>
+	{/if}
 
-  <button on:click={name.validate}>Validate field</button>
+	<button on:click={name.validate}>Validate field</button>
 </section>
 ```

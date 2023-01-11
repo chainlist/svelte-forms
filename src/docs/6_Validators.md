@@ -165,21 +165,23 @@ Of course this validator can be asynchronus and return a promise.
 
 ```svelte
 <script lang="ts">
-  import { field } from 'svelte-forms';
+	import { field } from 'svelte-forms';
 
-  function checkName() {
-    return async (value: string) => {
-      const users: any[] = await fetch('https://jsonplaceholder.typicode.com/users').then((r) => r.json());
+	function checkName() {
+		return async (value: string) => {
+			const users: any[] = await fetch('https://jsonplaceholder.typicode.com/users').then((r) =>
+				r.json()
+			);
 
-      return { valid: !users.find((d) => d.name === value), name: 'already_taken' };
-    };
-  }
+			return { valid: !users.find((d) => d.name === value), name: 'already_taken' };
+		};
+	}
 
-  function validatorWithParams(str: string) {
-    return (value: string) => ({ valid: value === str, name: 'it_does_not_match' })
-  }
+	function validatorWithParams(str: string) {
+		return (value: string) => ({ valid: value === str, name: 'it_does_not_match' });
+	}
 
-  const name = field('name', '', [checkName(), validatorWithParams('it should match this')])
+	const name = field('name', '', [checkName(), validatorWithParams('it should match this')]);
 </script>
 
 <input type="text" bind:value={$name.value} />

@@ -118,14 +118,14 @@ describe('field()', () => {
 
 	it('should remain invalid on change', async () => {
 		let emailOptions = { validateOnChange: false, valid: false };
-		const emailField = field('emailField', "", [email()], emailOptions);
+		const emailField = field('emailField', '', [email()], emailOptions);
 
 		emailField.set(get(field('emailField', 'not an email', [email()], emailOptions)));
 		expect(get(emailField).valid).toEqual(false);
 
 		emailField.set(get(field('emailField', 'hello@email.com', [email()], emailOptions)));
 		expect(get(emailField).valid).toEqual(false);
-		
+
 		await emailField.validate();
 		expect(get(emailField).valid).toEqual(true);
 	});

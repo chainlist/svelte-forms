@@ -16,29 +16,31 @@ You will need to use to `:global()` CSS keyword to customize to look of those cl
 
 ```svelte
 <script>
-  import { field, style } from 'svelte-forms';
+	import { field, style } from 'svelte-forms';
 
-  const name = field('name');
+	const name = field('name');
 </script>
 
-<input text="text" use:style={{ field: name }}>
-<input text="text" use:style={{ field: name, valid: "foo", invalid: "bar" }}>
+<input text="text" use:style={{ field: name }} />
+<input text="text" use:style={{ field: name, valid: 'foo', invalid: 'bar' }} />
 
 <style>
-  input {
-    outline: none;
-  }
+	input {
+		outline: none;
+	}
 
-  :global(.invalid), :global(.bar) {
-    border: 1px solid red;
-  }
+	:global(.invalid),
+	:global(.bar) {
+		border: 1px solid red;
+	}
 
-  :global(.valid), :global(.foo) {
-    border: 1px solid green;
-  }
+	:global(.valid),
+	:global(.foo) {
+		border: 1px solid green;
+	}
 
-  :global(.dirty) {
-    border: 1px dashed black;
-  }
+	:global(.dirty) {
+		border: 1px dashed black;
+	}
 </style>
 ```

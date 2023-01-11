@@ -32,8 +32,8 @@ In addition there is two different functions that can be called on the store:
 
 ```svelte
 <script>
-  myForm.hasError('name.required'); // will throw an error "hasError is not a function"
-  $myForm.hasError('name.required'); // will work
+	myForm.hasError('name.required'); // will throw an error "hasError is not a function"
+	$myForm.hasError('name.required'); // will work
 </script>
 ```
 
@@ -41,18 +41,18 @@ In addition there is two different functions that can be called on the store:
 
 ```svelte
 <script>
-  import { form, field } from 'svelte-forms';
-  import { required } from 'svelte-forms/validators';
+	import { form, field } from 'svelte-forms';
+	import { required } from 'svelte-forms/validators';
 
-  const name = field('name', '', [required()]);
-  const myForm = form(name);
+	const name = field('name', '', [required()]);
+	const myForm = form(name);
 </script>
 
 <section>
-  <input type="text" bind:value={$name.value}>
+	<input type="text" bind:value={$name.value} />
 
-  {#if $myForm.hasError('name.required')}
-    <div>Name is required</div>
-  {/if}
+	{#if $myForm.hasError('name.required')}
+		<div>Name is required</div>
+	{/if}
 </section>
 ```

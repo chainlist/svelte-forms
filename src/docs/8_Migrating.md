@@ -30,15 +30,13 @@ const myForm(name);
 - use `field` instead of `form` as now the validation is made per field
 
 ```svelte
-
 <!-- V1 -->
 <!-- const myForm = form(...); -->
-<input type="text" use:bindClass={{ form: myForm, field: 'name' }}>
+<input type="text" use:bindClass={{ form: myForm, field: 'name' }} />
 
 <!-- V2 -->
 <!-- const name = field('name', ''); -->
-<input type="text" use:style={{ field: name }}>
-
+<input type="text" use:style={{ field: name }} />
 ```
 
 ### validators
