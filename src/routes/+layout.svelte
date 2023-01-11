@@ -23,7 +23,6 @@
 	];
 
 	setContext('docs', docs);
-	const cssBuffer = 'pl-0 pl-2 pl-4 pl-8 border-t-0 border-r-0 border-t-1';
 
 	function toggle() {
 		if (device === 'mobile') {
@@ -62,7 +61,7 @@
 			{#each docs as asyncDoc}
 				{#await asyncDoc then doc}
 					{#each doc.toc as toc}
-						<li class:main-link={toc.level == 2} class:sub-link={toc.level != 2}>
+						<li class:main-link={toc.level === '2'} class:sub-link={toc.level !== '2'}>
 							<a class="hover:underline" href="#{kebab(toc.content)}" rel="external"
 								>{toc.content}</a
 							>

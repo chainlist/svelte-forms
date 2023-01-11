@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { getContext, onMount } from 'svelte';
 	import 'prismjs/themes/prism.css';
 
