@@ -10,7 +10,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && touch build/.nojekyll",
-		"package": "pnpm run test && svelte-kit package && node clean-package.js",
+		"package": "pnpm run test && svelte-package && node clean-package.js",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
@@ -29,6 +29,7 @@
 		"@sveltejs/adapter-auto": "^1.0.0",
 		"@sveltejs/adapter-static": "^1.0.1",
 		"@sveltejs/kit": "^1.0.11",
+		"@sveltejs/package": "^1.0.2",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/svelte": "^3.2.2",
 		"@types/jest": "^27.5.2",

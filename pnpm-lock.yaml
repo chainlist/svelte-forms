@@ -6,6 +6,7 @@ specifiers:
   '@sveltejs/adapter-auto': ^1.0.0
   '@sveltejs/adapter-static': ^1.0.1
   '@sveltejs/kit': ^1.0.11
+  '@sveltejs/package': ^1.0.2
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/svelte': ^3.2.2
   '@types/jest': ^27.5.2
@@ -59,6 +60,7 @@ devDependencies:
   '@sveltejs/adapter-auto': 1.0.0_@sveltejs+kit@1.0.11
   '@sveltejs/adapter-static': 1.0.1_@sveltejs+kit@1.0.11
   '@sveltejs/kit': 1.0.11_svelte@3.55.1+vite@4.0.4
+  '@sveltejs/package': 1.0.2_atrrhq7vg4ekua4nnyrpuardle
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/svelte': 3.2.2_svelte@3.55.1
   '@types/jest': 27.5.2
@@ -2040,6 +2042,22 @@ packages:
       vite: 4.0.4
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@sveltejs/package/1.0.2_atrrhq7vg4ekua4nnyrpuardle:
+    resolution: {integrity: sha512-VY9U+05d9uNFDj7ScKRlHORYlfPSHwJewBjV+V2RsnViexpLFPUrboC9SiPYDCpLnbeqwXerxhO6twGHUBGeIA==}
+    engines: {node: ^16.14 || >=18}
+    hasBin: true
+    peerDependencies:
+      svelte: ^3.44.0
+    dependencies:
+      chokidar: 3.5.3
+      kleur: 4.1.5
+      sade: 1.8.1
+      svelte: 3.55.1
+      svelte2tsx: 0.6.0_atrrhq7vg4ekua4nnyrpuardle
+    transitivePeerDependencies:
+      - typescript
     dev: true
 
   /@sveltejs/vite-plugin-svelte/2.0.2_svelte@3.55.1+vite@4.0.4:
@@ -7014,6 +7032,18 @@ packages:
     peerDependencies:
       svelte: ^3.24
       typescript: ^4.1.2
+    dependencies:
+      dedent-js: 1.0.1
+      pascal-case: 3.1.2
+      svelte: 3.55.1
+      typescript: 4.9.4
+    dev: true
+
+  /svelte2tsx/0.6.0_atrrhq7vg4ekua4nnyrpuardle:
+    resolution: {integrity: sha512-TrxfQkO7CKi8Pu2eC/FyteDCdk3OOeQV5u6z7OjYAsOhsd0ClzAKqxJdvp6xxNQLrbFzf/XvCi9Fy8MQ1MleFA==}
+    peerDependencies:
+      svelte: ^3.55
+      typescript: ^4.9.4
     dependencies:
       dedent-js: 1.0.1
       pascal-case: 3.1.2
