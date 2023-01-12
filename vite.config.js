@@ -13,14 +13,6 @@ mdit.use(anchor, { slugify });
 /** @type {import('vite').UserConfig} */
 const config = {
 	plugins: [sveltekit(), plugin({ mode: [Mode.HTML, Mode.TOC], markdownIt: mdit })],
-	resolve: {
-		alias: {
-			$components: path.resolve('src/components'),
-			$utils: path.resolve('src/utils'),
-			'svelte-forms': path.resolve('src/lib'),
-			'svelte-forms/validators': path.resolve('src/lib/validators')
-		}
-	}
 };
 
 export default config;
