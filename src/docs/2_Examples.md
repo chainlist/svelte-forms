@@ -11,7 +11,7 @@ filename: 2_Examples.md
   import { form, field } from 'svelte-forms';
   import { required } from 'svelte-forms/validators';
 
-  const name = field('name', '', [required()]);
+  const name = field('name', '', [required()], { checkOnInit: true });
   const myForm = form(name);
 </script>
 
