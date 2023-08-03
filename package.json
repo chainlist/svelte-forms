@@ -62,7 +62,7 @@
 		"prism-svelte": "^0.4.7",
 		"prismjs": "^1.26.0",
 		"svelte-awesome": "^2.4.2",
-		"ua-parser-js": "^1.0.2"
+		"ua-parser-js": "^1.0.33"
 	},
 	"homepage": "https://chainlist.github.io/svelte-forms/",
 	"repository": {
